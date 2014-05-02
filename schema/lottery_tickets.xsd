@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.ti.bfh.ch/euromillions/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:lot="http://www.ti.bfh.ch/euromillions/">
-	<xs:element name="lottery_tickets" type="lot:lottery_tickets_type"></xs:element>
+<xs:schema targetNamespace="http://www.ti.bfh.ch/euromillions/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:lot="http://www.ti.bfh.ch/euromillions/">
+	
+	<xs:element name="lottery_tickets">
+	<xs:complexType>
+	<xs:sequence>
+	<xs:element ref="lot:lottery_ticket" maxOccurs="unbounded" minOccurs="1"></xs:element>
+	</xs:sequence>
+	</xs:complexType>
+	</xs:element>
 
 	<xs:element name="lottery_ticket" type="lot:lottery_ticket_type"></xs:element>
 
@@ -17,28 +25,19 @@
 		</xs:simpleType>
 	</xs:element>
 
-	<xs:complexType name="lottery_tickets_type">
-		<xs:sequence>
-			<xs:element ref="lot:lottery_ticket" maxOccurs="unbounded" minOccurs="1"></xs:element>
-		</xs:sequence>
-	</xs:complexType>
-
 	<xs:complexType name="lottery_ticket_type">
 		<xs:sequence>
 			<xs:element ref="lot:plays" maxOccurs="1" minOccurs="1"></xs:element>
-			<xs:element name="super_star_numbers" maxOccurs="1"
-				minOccurs="0">
+			<xs:element name="super_star_numbers" maxOccurs="1" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="super_star_number"
-							type="xs:string" maxOccurs="4" minOccurs="1">
+						<xs:element name="super_star_number" type="xs:string" maxOccurs="4" minOccurs="1">
 						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-            <xs:element name="next_draw_date" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
-            <xs:element ref="lot:validity" maxOccurs="1"
-				minOccurs="1">
+			<xs:element name="next_draw_date" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
+			<xs:element ref="lot:validity" maxOccurs="1" minOccurs="1">
 			</xs:element>
 
 		</xs:sequence>
@@ -57,13 +56,10 @@
 
 										<xs:element name="number" maxOccurs="5" minOccurs="5">
 											<xs:simpleType>
-												<xs:restriction
-													base="xs:int">
-													<xs:minInclusive
-														value="1">
+												<xs:restriction base="xs:int">
+													<xs:minInclusive value="1">
 													</xs:minInclusive>
-													<xs:maxInclusive
-														value="50">
+													<xs:maxInclusive value="50">
 													</xs:maxInclusive>
 												</xs:restriction>
 											</xs:simpleType>
