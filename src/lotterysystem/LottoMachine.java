@@ -14,6 +14,7 @@ public class LottoMachine {
 	private static int[] winningStarNumbers;
 	
 
+	/*
 	// TODO: modify to be more generic and implement via abstract IO class
 	public static void printNumbers() {
 		winningMainNumbers = drawWinningNumbers(AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
@@ -23,6 +24,45 @@ public class LottoMachine {
 		winningStarNumbers = drawWinningNumbers(AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		System.out.println("Winning star numbers:");
 		System.out.println(formatNumbers(winningStarNumbers));
+	}
+	*/
+	
+	public static String formatNumbers(int[] numberArray) {
+		String formatted="";
+		for (int i=0; i<numberArray.length; i++) formatted += numberArray[i] + " ";
+		return formatted;
+	}
+	
+	public static int getAmountMainNumbers () {
+		return AMOUNT_MAIN_NUMBERS;
+	}
+	
+	public static int getMaxMainNumber () {
+		return MAX_MAIN_NUMBER;
+	}
+	
+	public static int getMinMainNumber () {
+		return MIN_MAIN_NUMBER;
+	}
+	
+	public static int getAmountStarNumber () {
+		return AMOUNT_STAR_NUMBERS;
+	}
+	
+	public static int getMaxStarNumber () {
+		return MAX_STAR_NUMBER;
+	}
+	
+	public static int getMinStarNumber () {
+		return MIN_STAR_NUMBER;
+	}
+	
+	public static int[] drawWinningMainNumbers () {
+		return drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
+	}
+	
+	public static int[] drawWinningStarNumbers () {
+		return drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 	}
 	
 	private static int[] drawWinningNumbers(int amount, int minValue, int maxValue) {
@@ -74,9 +114,4 @@ public class LottoMachine {
 		return false;
 	}
 	
-	private static String formatNumbers(int[] numberArray) {
-		String formatted="";
-		for (int i=0; i<numberArray.length; i++) formatted += numberArray[i] + " ";
-		return formatted;
-	}
 }

@@ -12,7 +12,7 @@
 
 	<xs:element name="lottery_ticket" type="lot:lottery_ticket_type"></xs:element>
 
-	<xs:element name="validity">
+	<xs:element name="validity_duration">
 		<xs:simpleType>
 			<xs:restriction base="xs:int">
 				<xs:enumeration value="1"></xs:enumeration>
@@ -36,8 +36,8 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="next_draw_date" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
-			<xs:element ref="lot:validity" maxOccurs="1" minOccurs="1">
+			<xs:element name="next_drawing_date" type="xs:date" minOccurs="1" maxOccurs="1"></xs:element>
+			<xs:element ref="lot:validity_duration" maxOccurs="1" minOccurs="1">
 			</xs:element>
 
 		</xs:sequence>
