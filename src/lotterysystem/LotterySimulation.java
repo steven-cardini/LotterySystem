@@ -8,9 +8,9 @@ public class LotterySimulation {
 	private TicketAnalyzer analyzer;
 	private static int[] winningMainNumbers;
 	private static int[] winningStarNumbers;
-	private String winningSuperStarNumber = "test";
+	private static String winningSuperStarNumber = "test";
 	
-	public static void main(String[] args) {
+	public static void main (String[] args) {
 		LotterySimulation sim = new LotterySimulation();
 		sim.drawNewWinningNumbers();
 		io.printMessage("Amount of matching numbers: " + sim.numbersMatch());
@@ -36,9 +36,9 @@ public class LotterySimulation {
 	}
 	
 	private void drawNewWinningNumbers () {
-		this.winningMainNumbers = LottoMachine.drawWinningMainNumbers();
-		this.winningStarNumbers = LottoMachine.drawWinningStarNumbers();
-		analyzer = new TicketAnalyzer(this.winningMainNumbers, this.winningStarNumbers, this.winningSuperStarNumber, new Date());
+		winningMainNumbers = LottoMachine.drawWinningMainNumbers();
+		winningStarNumbers = LottoMachine.drawWinningStarNumbers();
+		analyzer = new TicketAnalyzer(winningMainNumbers, winningStarNumbers, winningSuperStarNumber, new Date());
 	}
 
 }
