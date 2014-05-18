@@ -2,6 +2,10 @@ package lotterysystem;
 
 public interface IInputOutputHandler {
 	
+	public static enum language {
+		ENGLISH, GERMAN;
+	}
+	
 	public void printMessage (String text);
 	
 	public void printWarning (String text);
@@ -12,6 +16,6 @@ public interface IInputOutputHandler {
 	
 	public String scanInput ();
 	
-	public int[] scanNumbers (int amount, int max, int min);
+	public int[] getNumbers (int amount, int max, int min);
 
 }
