@@ -1,23 +1,20 @@
 package lotterysystem;
 
-import java.util.Date;
 import java.util.ListResourceBundle;
 
-import lotterysystem.ConsoleIOHandler.menuSelection;
+import lotterysystem.IInputOutputHandler.*;
 
 public class LotterySimulation {
 	
 	private static ConsoleIOHandler io = new ConsoleIOHandler();
 	private TicketAnalyzer analyzer;
-	private static int[] winningMainNumbers;
-	private static int[] winningStarNumbers;
-	private static String winningSuperStarNumber = "test";
-
 	private ListResourceBundle textResources = new TextResourcesEN();
-	private static boolean running = true;
+
+	private static boolean running;	
 	
 	
 	public static void main (String[] args) {
+		running = true;
 		LotterySimulation sim = new LotterySimulation();
 		sim.drawNewWinningNumbers();
 		
@@ -55,9 +52,8 @@ public class LotterySimulation {
 	}
 		
 	private void drawNewWinningNumbers () {
-		winningMainNumbers = LottoMachine.drawWinningMainNumbers();
-		winningStarNumbers = LottoMachine.drawWinningStarNumbers();
-		analyzer = new TicketAnalyzer(winningMainNumbers, winningStarNumbers, winningSuperStarNumber, new Date());
+		LottoMachine.draw();
+		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getDrawDate());
 	}
 	
 	private void inputNumbers () {
@@ -85,12 +81,12 @@ public class LotterySimulation {
 		}
 		
 		io.printMessage(textResources.getString("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
-		io.printMessage(textResources.getString("winning_numbers") + " " + LottoMachine.formatNumbers(winningMainNumbers) + " + " + LottoMachine.formatNumbers(winningStarNumbers));
+		io.printMessage(textResources.getString("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
 		io.printMessage(textResources.getString("amount_matching_numbers") + " " + analyzer.amountMatchingMainNumbers(mainNumbers) + " + " + analyzer.amountMatchingStarNumbers(starNumbers));
 	}
 	
 	private void changeLanguage () {
-		IInputOutputHandler.language lang;
+		language lang;
 		try {
 			lang = io.getLanguageSelection();
 		} catch (IllegalArgumentException e) {
@@ -114,7 +110,7 @@ public class LotterySimulation {
 		return starNumbers;
 	}
 	
-	private void switchTextResources (IInputOutputHandler.language lang) {
+	private void switchTextResources (language lang) {
 		switch (lang) {
 		case ENGLISH:
 			this.textResources = new TextResourcesEN();

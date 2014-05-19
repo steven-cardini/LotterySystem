@@ -8,10 +8,7 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 	private Scanner in = new Scanner (System.in);
 	private ListResourceBundle textResources = new TextResourcesEN();
 	
-	public static enum menuSelection {
-		CHANGE_LANGUAGE, DRAW_NUMBERS, INPUT_NUMBERS, QUIT;
-	}
-	
+
 	@Override
 	public void printMessage(String text) {
 		System.out.println(text);		

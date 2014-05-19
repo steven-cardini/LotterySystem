@@ -2,6 +2,10 @@ package lotterysystem;
 
 public interface IInputOutputHandler {
 	
+	public static enum menuSelection {
+		CHANGE_LANGUAGE, DRAW_NUMBERS, INPUT_NUMBERS, QUIT;
+	}
+	
 	public static enum language {
 		ENGLISH, GERMAN;
 	}

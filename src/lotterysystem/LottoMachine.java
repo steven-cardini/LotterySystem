@@ -1,5 +1,7 @@
 package lotterysystem;
 
+import java.util.Date;
+
 public class LottoMachine {
 	
 	private final static int AMOUNT_MAIN_NUMBERS = 5;
@@ -12,25 +14,36 @@ public class LottoMachine {
 	
 	private static int[] winningMainNumbers;
 	private static int[] winningStarNumbers;
+	private static String winningSuperStar;
+	private static Date drawDate;
 	
-
-	/*
-	// TODO: modify to be more generic and implement via abstract IO class
-	public static void printNumbers() {
-		winningMainNumbers = drawWinningNumbers(AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
-		System.out.println("\nWinning main numbers:");
-		System.out.println(formatNumbers(winningMainNumbers));
-		
-		winningStarNumbers = drawWinningNumbers(AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
-		System.out.println("Winning star numbers:");
-		System.out.println(formatNumbers(winningStarNumbers));
+	
+	public static void draw () {
+		winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
+		winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
+		drawDate = new Date();
 	}
-	*/
 	
 	public static String formatNumbers(int[] numberArray) {
 		String formatted="";
 		for (int i=0; i<numberArray.length; i++) formatted += numberArray[i] + " ";
 		return formatted;
+	}
+	
+	public static int[] getWinningMainNumbers () {
+		return winningMainNumbers;
+	}
+	
+	public static int[] getWinningStarNumbers () {
+		return winningStarNumbers;
+	}
+	
+	public static String getWinningSuperStar () {
+		return winningSuperStar;
+	}
+	
+	public static Date getDrawDate () {
+		return drawDate;
 	}
 	
 	public static int getAmountMainNumbers () {
@@ -57,6 +70,7 @@ public class LottoMachine {
 		return MIN_STAR_NUMBER;
 	}
 	
+	/*
 	public static int[] drawWinningMainNumbers () {
 		return drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
 	}
@@ -64,6 +78,7 @@ public class LottoMachine {
 	public static int[] drawWinningStarNumbers () {
 		return drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 	}
+	*/
 	
 	private static int[] drawWinningNumbers(int amount, int minValue, int maxValue) {
 		int[] newWinningNumbers = new int[amount];
