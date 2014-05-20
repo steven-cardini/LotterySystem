@@ -1,12 +1,16 @@
 package lotterysystem;
 
-import java.util.ListResourceBundle;
 import java.util.Scanner;
+import lotterysystem.LanguageHandler.*;
 
 public class ConsoleIOHandler implements IInputOutputHandler {
 	
 	private Scanner in = new Scanner (System.in);
-	private ListResourceBundle textResources = new TextResourcesEN();
+	private LanguageHandler lang;
+	
+	public ConsoleIOHandler(LanguageHandler l) {
+		this.lang = l;
+	}
 	
 
 	@Override
@@ -16,7 +20,7 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 
 	@Override
 	public void printWarning(String text) {
-		System.out.println(textResources.getString("warning") +text);
+		System.out.println(lang.getMessage("warning") +text);
 	}
 
 	@Override
@@ -26,7 +30,7 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 
 	@Override
 	public void printSuccess(String text) {
-		System.out.println(textResources.getString("success") +text);
+		System.out.println(lang.getMessage("success") +text);
 	}
 
 	@Override
@@ -37,37 +41,37 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 		return input;		
 	}
 	
-	public menuSelection getMenuSelection () throws IllegalArgumentException {
-		this.printMessage(textResources.getString("console_main_menu"));
+	public MenuSelection getMenuSelection () throws IllegalArgumentException {
+		this.printMessage(lang.getMessage("console_main_menu"));
 		String input = this.scanInput().toLowerCase();
 		
 		if (!input.matches("[abhq]")) throw new IllegalArgumentException();
 		
 		switch (input) {
 		case "a":
-			return menuSelection.INPUT_NUMBERS;
+			return MenuSelection.INPUT_NUMBERS;
 		case "b":
-			return menuSelection.DRAW_NUMBERS;
+			return MenuSelection.DRAW_NUMBERS;
 		case "h":
-			return menuSelection.CHANGE_LANGUAGE;
+			return MenuSelection.CHANGE_LANGUAGE;
 		case "q":
-			return menuSelection.QUIT;
+			return MenuSelection.QUIT;
 		default:
 			throw new IllegalArgumentException();
 		}
 	}
 	
-	public language getLanguageSelection () throws IllegalArgumentException {
-		this.printMessage(textResources.getString("console_language_selection"));
+	public Language getLanguageSelection () throws IllegalArgumentException {
+		this.printMessage(lang.getMessage("console_language_selection"));
 		String input = this.scanInput().toLowerCase();
 		
 		if (!input.matches("[de]")) throw new IllegalArgumentException();
 		
 		switch (input) {
 		case "d":
-			return language.GERMAN;
+			return Language.GERMAN;
 		case "e":
-			return language.ENGLISH;
+			return Language.ENGLISH;
 		default:
 			throw new IllegalArgumentException();
 		}
@@ -94,17 +98,6 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 			mainNumbers[i] = nr;
 		}
 		return mainNumbers;
-	}
-	
-	public void switchTextResources (IInputOutputHandler.language lang) {
-		switch (lang) {
-		case ENGLISH:
-			this.textResources = new TextResourcesEN();
-			break;
-		case GERMAN:
-			this.textResources = new TextResourcesDE();
-			break;
-		}
 	}
 
 }

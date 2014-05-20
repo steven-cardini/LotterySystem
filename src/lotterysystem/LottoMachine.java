@@ -70,16 +70,6 @@ public class LottoMachine {
 		return MIN_STAR_NUMBER;
 	}
 	
-	/*
-	public static int[] drawWinningMainNumbers () {
-		return drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
-	}
-	
-	public static int[] drawWinningStarNumbers () {
-		return drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
-	}
-	*/
-	
 	private static int[] drawWinningNumbers(int amount, int minValue, int maxValue) {
 		int[] newWinningNumbers = new int[amount];
 		int currentDrawIndex=0;

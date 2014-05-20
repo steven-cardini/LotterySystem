@@ -1,14 +1,13 @@
 package lotterysystem;
 
-import java.util.ListResourceBundle;
-
+import lotterysystem.LanguageHandler.*;
 import lotterysystem.IInputOutputHandler.*;
 
 public class LotterySimulation {
 	
-	private static ConsoleIOHandler io = new ConsoleIOHandler();
+	private static LanguageHandler lang = new LanguageHandler();
+	private static ConsoleIOHandler io = new ConsoleIOHandler(lang);
 	private TicketAnalyzer analyzer;
-	private ListResourceBundle textResources = new TextResourcesEN();
 
 	private static boolean running;	
 	
@@ -18,14 +17,14 @@ public class LotterySimulation {
 		LotterySimulation sim = new LotterySimulation();
 		sim.drawNewWinningNumbers();
 		
-		io.printMessage(sim.textResources.getString("welcome"));
+		io.printMessage(lang.getMessage("welcome"));
 		
 		while (running) {
-			menuSelection selected;
+			MenuSelection selected;
 			try {
 				selected = io.getMenuSelection();
 			} catch (IllegalArgumentException e) {
-				io.printError(sim.textResources.getString("invalid_input"));
+				io.printError(lang.getMessage("invalid_input"));
 				continue;
 			}
 			
@@ -43,7 +42,7 @@ public class LotterySimulation {
 				running = false;
 				break;
 			default:
-				io.printError(sim.textResources.getString("unknown_error"));
+				io.printError(lang.getMessage("unknown_error"));
 				continue;
 			}
 			
@@ -63,62 +62,49 @@ public class LotterySimulation {
 		try {
 			mainNumbers = this.getMainNumbers();
 		} catch (NumberOutOfRangeException e) {
-			io.printError(textResources.getString("only_numbers_accepted_range") + " " + LottoMachine.getMinMainNumber() + "-" + LottoMachine.getMaxMainNumber());
+			io.printError(lang.getMessage("only_numbers_accepted_range") + " " + LottoMachine.getMinMainNumber() + "-" + LottoMachine.getMaxMainNumber());
 			return;
 		} catch (IllegalArgumentException e) {
-			io.printError(textResources.getString("only_numbers_accepted"));
+			io.printError(lang.getMessage("only_numbers_accepted"));
 			return;
 		}
 		
 		try {
 			starNumbers = this.getStarNumbers();
 		} catch (NumberOutOfRangeException e) {
-			io.printError(textResources.getString("only_numbers_accepted_range") + " " + LottoMachine.getMinStarNumber() + "-" + LottoMachine.getMaxStarNumber());
+			io.printError(lang.getMessage("only_numbers_accepted_range") + " " + LottoMachine.getMinStarNumber() + "-" + LottoMachine.getMaxStarNumber());
 			return;
 		} catch (IllegalArgumentException e) {
-			io.printError(textResources.getString("only_numbers_accepted"));
+			io.printError(lang.getMessage("only_numbers_accepted"));
 			return;
 		}
 		
-		io.printMessage(textResources.getString("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
-		io.printMessage(textResources.getString("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
-		io.printMessage(textResources.getString("amount_matching_numbers") + " " + analyzer.amountMatchingMainNumbers(mainNumbers) + " + " + analyzer.amountMatchingStarNumbers(starNumbers));
+		io.printMessage(lang.getMessage("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
+		io.printMessage(lang.getMessage("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
+		io.printMessage(lang.getMessage("amount_matching_numbers") + " " + analyzer.amountMatchingMainNumbers(mainNumbers) + " + " + analyzer.amountMatchingStarNumbers(starNumbers));
 	}
 	
 	private void changeLanguage () {
-		language lang;
+		Language language;
 		try {
-			lang = io.getLanguageSelection();
+			language = io.getLanguageSelection();
 		} catch (IllegalArgumentException e) {
-			io.printError(textResources.getString("invalid_input"));
+			io.printError(lang.getMessage("invalid_input"));
 			return;
 		}
 		
-		this.switchTextResources(lang);
-		io.switchTextResources(lang);
+		lang.setLanguage(language);
 	}
 	
 	private int[] getMainNumbers () throws NumberOutOfRangeException, IllegalArgumentException {
-		io.printMessage(textResources.getString("enter_main_numbers"));
+		io.printMessage(lang.getMessage("enter_main_numbers"));
 		int[] mainNumbers = io.getNumbers(LottoMachine.getAmountMainNumbers(), LottoMachine.getMaxMainNumber(), LottoMachine.getMinMainNumber());
 		return mainNumbers;
 	}
 	
 	private int[] getStarNumbers () throws NumberOutOfRangeException, IllegalArgumentException {
-		io.printMessage(textResources.getString("enter_star_numbers"));
+		io.printMessage(lang.getMessage("enter_star_numbers"));
 		int[] starNumbers = io.getNumbers(LottoMachine.getAmountStarNumber(), LottoMachine.getMaxStarNumber(), LottoMachine.getMinStarNumber());
 		return starNumbers;
 	}
-	
-	private void switchTextResources (language lang) {
-		switch (lang) {
-		case ENGLISH:
-			this.textResources = new TextResourcesEN();
-			break;
-		case GERMAN:
-			this.textResources = new TextResourcesDE();
-			break;
-		}
-	}
-
 }
