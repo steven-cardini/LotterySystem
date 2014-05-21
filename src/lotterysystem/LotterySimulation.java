@@ -1,5 +1,7 @@
 package lotterysystem;
 
+import java.io.IOException;
+
 import lotterysystem.LanguageHandler.*;
 import lotterysystem.IInputOutputHandler.*;
 
@@ -12,8 +14,9 @@ public class LotterySimulation {
 	private static boolean running;	
 	
 	
-	public static void main (String[] args) {
+	public static void main (String[] args) throws ClassNotFoundException, IOException {
 		running = true;
+		LottoMachine.initialize();
 		LotterySimulation sim = new LotterySimulation();
 		sim.drawNewWinningNumbers();
 		
@@ -50,9 +53,9 @@ public class LotterySimulation {
 		
 	}
 		
-	private void drawNewWinningNumbers () {
+	private void drawNewWinningNumbers () throws ClassNotFoundException, IOException {
 		LottoMachine.draw();
-		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getDrawDate());
+		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getDrawingDate());
 	}
 	
 	private void inputNumbers () {

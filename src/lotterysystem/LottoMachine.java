@@ -1,5 +1,12 @@
 package lotterysystem;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class LottoMachine {
@@ -11,19 +18,22 @@ public class LottoMachine {
 	private final static int AMOUNT_STAR_NUMBERS = 2;
 	private final static int MIN_STAR_NUMBER = 1;
 	private final static int MAX_STAR_NUMBER = 11;
+
+	private static File historyWinnersFile = new File ("historyWinningNumbers.log");
+	private static WinningNumbersSet currentWinningSet;
+	private static ArrayList<WinningNumbersSet> pastWinningSets;
 	
-	private static int[] winningMainNumbers;
-	private static int[] winningStarNumbers;
-	private static String winningSuperStar;
-	private static Date drawDate;
 	
-	
-	public static void draw () {
-		winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
-		winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
-		drawDate = new Date();
+	public static void draw () throws ClassNotFoundException, IOException {
+		int[] winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
+		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
+		String winningSuperStar = "CHK1234";
+		
+		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, getNewDate());
+		
+		saveWinningNumbers();
 	}
-	
+
 	public static String formatNumbers(int[] numberArray) {
 		String formatted="";
 		for (int i=0; i<numberArray.length; i++) formatted += numberArray[i] + " ";
@@ -31,19 +41,19 @@ public class LottoMachine {
 	}
 	
 	public static int[] getWinningMainNumbers () {
-		return winningMainNumbers;
+		return currentWinningSet.getWinningMainNumbers();
 	}
 	
 	public static int[] getWinningStarNumbers () {
-		return winningStarNumbers;
+		return currentWinningSet.getWinningStarNumbers();
 	}
 	
 	public static String getWinningSuperStar () {
-		return winningSuperStar;
+		return currentWinningSet.getWinningSuperStar();
 	}
 	
-	public static Date getDrawDate () {
-		return drawDate;
+	public static Date getDrawingDate () {
+		return currentWinningSet.getDrawingDate();
 	}
 	
 	public static int getAmountMainNumbers () {
@@ -68,6 +78,34 @@ public class LottoMachine {
 	
 	public static int getMinStarNumber () {
 		return MIN_STAR_NUMBER;
+	}
+	
+	
+	static void initialize() throws ClassNotFoundException, IOException {
+		if (!historyWinnersFile.exists()) {
+			historyWinnersFile.createNewFile();
+			pastWinningSets = new ArrayList<>();
+			draw();
+			saveWinningNumbers();
+		} else {
+			loadWinningNumbers();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static void loadWinningNumbers() throws IOException, ClassNotFoundException {
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream(historyWinnersFile));
+		pastWinningSets = (ArrayList<WinningNumbersSet>) in.readObject();
+		in.close();
+	}
+
+	private static void saveWinningNumbers() throws IOException, ClassNotFoundException {
+		if (currentWinningSet != null) 
+			pastWinningSets.add(currentWinningSet);
+		
+		ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream(historyWinnersFile));
+		out.writeObject(pastWinningSets);
+		out.close();
 	}
 	
 	private static int[] drawWinningNumbers(int amount, int minValue, int maxValue) {
@@ -117,6 +155,14 @@ public class LottoMachine {
 		}
 		
 		return false;
+	}
+	
+	//TODO: improve method so that it only returns correct lotto days
+	private static Date getNewDate () {
+		Date newDate;
+		if (currentWinningSet != null) newDate = DateUtil.addDays(currentWinningSet.getDrawingDate(), 1);
+		else newDate = new Date();
+		return newDate;
 	}
 	
 }

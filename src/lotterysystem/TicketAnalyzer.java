@@ -6,13 +6,11 @@ public class TicketAnalyzer {
 	private int[] winningMainNumbers;
 	private int[] winningStarNumbers;
 	private String winningSuperStar;
-	private Date drawingDate;
-		
+	
 	public TicketAnalyzer (int[] winningMainNumbers, int[] winningStarNumbers, String winningSuperStar, Date drawingDate) {
 		this.winningMainNumbers = winningMainNumbers;
 		this.winningStarNumbers = winningStarNumbers;
 		this.winningSuperStar = winningSuperStar;
-		this.drawingDate = drawingDate;
 	}
 	
 	public int amountMatchingMainNumbers (int[] mainNumbers) {
