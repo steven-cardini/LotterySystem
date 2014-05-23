@@ -1,6 +1,4 @@
-bin/
 *.class
-*.log
+*.xml
 *.bin
-*.properties
 .settings/

@@ -158,7 +158,7 @@ public class LottoMachine {
 		return false;
 	}
 	
-	private static String generateSuperStar () {
+	static String generateSuperStar () {
 		Random r = new Random();
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		int pos = r.nextInt(alphabet.length());

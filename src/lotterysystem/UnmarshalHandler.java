@@ -3,6 +3,7 @@ package lotterysystem;
 import jaxb_lotterytypes.*;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -14,12 +15,14 @@ public class UnmarshalHandler {
 	private File inputFile;
 	private Unmarshaller unmarshaller;
 	
-	public UnmarshalHandler (File inputFile) throws JAXBException {
+	public UnmarshalHandler (File inputFile) throws JAXBException, IOException {
 		//Package
 		JAXBContext jc = JAXBContext.newInstance("jaxb_lotterytypes");
 		this.unmarshaller = jc.createUnmarshaller();
-		
 		this.inputFile=inputFile;
+		if (!inputFile.exists())
+			inputFile.createNewFile();
+		this.loadFile();
 	}
 	
 	public File getInputFile () {
@@ -31,6 +34,9 @@ public class UnmarshalHandler {
 	}
 	
 	private void loadFile () throws JAXBException {
-		this.lotteryTickets = (LotteryTickets) unmarshaller.unmarshal(this.inputFile);
+		if (inputFile.length()<1)
+			return;
+		else
+			this.lotteryTickets = (LotteryTickets) unmarshaller.unmarshal(this.inputFile);
 	}
 }
