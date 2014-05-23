@@ -1,6 +1,9 @@
 package lotterysystem;
 
+import java.io.File;
 import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
 
 import lotterysystem.LanguageHandler.*;
 import lotterysystem.IInputOutputHandler.*;
@@ -9,16 +12,22 @@ public class LotterySimulation {
 	
 	private static LanguageHandler lang = new LanguageHandler();
 	private static ConsoleIOHandler io = new ConsoleIOHandler(lang);
+	private static File outputXMLFile = new File ("tickets.xml");
+	private static MarshalHandler marshaller;
+	private static UnmarshalHandler unmarshaller;
 	private TicketAnalyzer analyzer;
 
 	private static boolean running;	
 	
 	
-	public static void main (String[] args) throws ClassNotFoundException, IOException {
+	public static void main (String[] args) throws ClassNotFoundException, IOException, JAXBException {
 		running = true;
 		LottoMachine.initialize();
 		LotterySimulation sim = new LotterySimulation();
 		sim.drawNewWinningNumbers();
+		
+		marshaller = new MarshalHandler(outputXMLFile);
+		unmarshaller = new UnmarshalHandler(outputXMLFile);
 		
 		io.printMessage(lang.getMessage("welcome"));
 		
@@ -82,9 +91,12 @@ public class LotterySimulation {
 			return;
 		}
 		
+		
+		
 		io.printMessage(lang.getMessage("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
 		io.printMessage(lang.getMessage("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
-		io.printMessage(lang.getMessage("amount_matching_numbers") + " " + analyzer.amountMatchingMainNumbers(mainNumbers) + " + " + analyzer.amountMatchingStarNumbers(starNumbers));
+		io.printMessage(lang.getMessage("winning_super_star") + " " + LottoMachine.getWinningSuperStar());
+		io.printMessage(lang.getMessage("amount_matching_numbers") + " " + analyzer.getAmountMatchingMainNumbers(mainNumbers) + " + " + analyzer.getAmountMatchingStarNumbers(starNumbers));
 	}
 	
 	private void changeLanguage () {

@@ -13,16 +13,16 @@ public class TicketAnalyzer {
 		this.winningSuperStar = winningSuperStar;
 	}
 	
-	public int amountMatchingMainNumbers (int[] mainNumbers) {
+	public int getAmountMatchingMainNumbers (int[] mainNumbers) {
 		return countIdenticals(this.winningMainNumbers, mainNumbers);
 	}
 	
-	public int amountMatchingStarNumbers (int[] starNumbers) {
+	public int getAmountMatchingStarNumbers (int[] starNumbers) {
 		 return countIdenticals(this.winningStarNumbers, starNumbers);
 	}
 	
-	public boolean superStarMatches(String superStar) {
-		return superStar.equals(this.winningSuperStar);
+	public int getAmountMatchingSuperStar (String superStar) {
+		return countIdenticals(winningSuperStar, superStar);
 	}
 	
 	private static int countIdenticals(int[] winningNumbers, int[] numberArray) {
@@ -34,6 +34,15 @@ public class TicketAnalyzer {
 					break;
 				}
 			}
+		}
+		return numberOfIdenticals;
+	}
+	
+	private static int countIdenticals(String winningSuperStar, String chosenSuperStar) {
+		int numberOfIdenticals=0;
+		for (int i=0; i<chosenSuperStar.length(); i++) {
+			if (chosenSuperStar.charAt(i)==winningSuperStar.charAt(i))
+				numberOfIdenticals++;
 		}
 		return numberOfIdenticals;
 	}

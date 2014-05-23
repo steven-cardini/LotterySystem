@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class LottoMachine {
 	
@@ -19,7 +20,7 @@ public class LottoMachine {
 	private final static int MIN_STAR_NUMBER = 1;
 	private final static int MAX_STAR_NUMBER = 11;
 
-	private static File historyWinnersFile = new File ("historyWinningNumbers.log");
+	private static File historyWinnersFile = new File ("historyWinningNumbers.bin");
 	private static WinningNumbersSet currentWinningSet;
 	private static ArrayList<WinningNumbersSet> pastWinningSets;
 	
@@ -27,7 +28,7 @@ public class LottoMachine {
 	public static void draw () throws ClassNotFoundException, IOException {
 		int[] winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
-		String winningSuperStar = "CHK1234";
+		String winningSuperStar = generateSuperStar();
 		
 		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, getNewDate());
 		
@@ -155,6 +156,20 @@ public class LottoMachine {
 		}
 		
 		return false;
+	}
+	
+	private static String generateSuperStar () {
+		Random r = new Random();
+		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		int pos = r.nextInt(alphabet.length());
+		String superStar = alphabet.substring(pos,pos+1);
+		
+		for (int i=0; i<3; i++)
+			superStar += r.nextInt(10);
+		
+		pos = r.nextInt(alphabet.length());
+		superStar += alphabet.substring(pos,pos+1);
+		return superStar;
 	}
 	
 	//TODO: improve method so that it only returns correct lotto days

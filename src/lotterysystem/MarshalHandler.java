@@ -3,8 +3,6 @@ package lotterysystem;
 import jaxb_lotterytypes.*;
 
 import java.io.File;
-import java.util.List;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -34,8 +32,9 @@ public class MarshalHandler {
 		this.outputFile=f;
 	}
 	
-	public void addTicket (LotteryTicketType ticket) {
+	public void addTicket (LotteryTicketType ticket) throws JAXBException {
 		this.lotteryTickets.getLotteryTicket().add(ticket);
+		this.saveFile();
 	}
 	
 	private void saveFile () throws JAXBException {
