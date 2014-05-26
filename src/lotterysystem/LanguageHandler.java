@@ -1,5 +1,7 @@
 package lotterysystem;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -36,5 +38,10 @@ public class LanguageHandler {
 	
 	Locale getCurrentLocale () {
 		return languageMap.get(currentLanguage);
+	}
+	
+	static String formatDate (Date date, Locale locale) {
+		DateFormat df = DateFormat.getDateInstance(0, locale);
+		return df.format(date);
 	}
 }

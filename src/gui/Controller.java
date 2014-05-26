@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 
 
-public class DesignController {
+public class Controller {
 
     @FXML
     private ResourceBundle resources;

@@ -156,7 +156,7 @@ public class LotterySimulation {
 			e.printStackTrace();
 		}
 		
-		io.printMessage(lang.getMessage("drawing_date") + " " + LottoMachine.getDrawingDate());
+		io.printMessage(lang.getMessage("drawing_date") + " " + LanguageHandler.formatDate(LottoMachine.getDrawingDate(), lang.getCurrentLocale()) );
 		io.printMessage(lang.getMessage("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
 		io.printMessage(lang.getMessage("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
 		io.printMessage(lang.getMessage("winning_super_star") + " " + LottoMachine.getWinningSuperStar());
