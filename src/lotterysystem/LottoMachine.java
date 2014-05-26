@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -172,12 +173,24 @@ public class LottoMachine {
 		return superStar;
 	}
 	
-	//TODO: improve method so that it only returns correct lotto days
+	//Method yields date of next drawing; the earliest date is "tomorrow"
 	private static Date getNewDate () {
 		Date newDate;
-		if (currentWinningSet != null) newDate = DateUtil.addDays(currentWinningSet.getDrawingDate(), 1);
-		else newDate = new Date();
-		return newDate;
+		if (currentWinningSet != null) {
+			newDate = currentWinningSet.getDrawingDate();
+		} else {
+			newDate = new Date();
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(newDate);
+		int weekDay = cal.get(Calendar.DAY_OF_WEEK);
+		
+		do 
+			cal.add(Calendar.DATE, 1);
+		while (weekDay!=2 && weekDay!=6);
+			
+		return cal.getTime();
 	}
 	
 }

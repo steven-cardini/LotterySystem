@@ -15,6 +15,7 @@ public class LanguageHandler {
 	
 	private HashMap<Language, Locale> languageMap;
 	private ResourceBundle messages;
+	private Language currentLanguage;
 	
 	LanguageHandler () {
 		languageMap = new HashMap<>();
@@ -26,9 +27,14 @@ public class LanguageHandler {
 	
 	void setLanguage (Language lang) {
 		messages = ResourceBundle.getBundle (resourceBaseName, languageMap.get(lang));
+		currentLanguage = lang;
 	}
 	
 	String getMessage (String key) {
 		return messages.getString(key);
+	}
+	
+	Locale getCurrentLocale () {
+		return languageMap.get(currentLanguage);
 	}
 }
