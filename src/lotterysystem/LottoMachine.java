@@ -54,7 +54,7 @@ public class LottoMachine {
 		return currentWinningSet.getWinningSuperStar();
 	}
 	
-	public static Date getLatestDrawingDate () {
+	public static Date getLastDrawingDate () {
 		return currentWinningSet.getDrawingDate();
 	}
 	
@@ -112,7 +112,7 @@ public class LottoMachine {
 		do {
 			cal.add(Calendar.DATE, 1);
 			weekDay = cal.get(Calendar.DAY_OF_WEEK);
-			if (weekDay==2 || weekDay==6) k++;
+			if (weekDay==3 || weekDay==6) k++;
 		
 		} while (k<n);
 			
@@ -129,7 +129,7 @@ public class LottoMachine {
 			cal.add(Calendar.DATE, 1);
 			weekDay = cal.get(Calendar.DAY_OF_WEEK);
 		
-		} while (weekDay!=2 && weekDay!=6);
+		} while (weekDay!=3 && weekDay!=6);
 			
 		return cal.getTime();
 	}
@@ -139,6 +139,7 @@ public class LottoMachine {
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(historyWinnersFile));
 		pastWinningSets = (ArrayList<WinningNumbersSet>) in.readObject();
 		in.close();
+		currentWinningSet = pastWinningSets.get(pastWinningSets.size()-1);
 	}
 
 	private static void saveWinningNumbers() throws IOException, ClassNotFoundException {

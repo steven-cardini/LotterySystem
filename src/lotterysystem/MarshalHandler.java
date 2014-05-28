@@ -69,10 +69,11 @@ public class MarshalHandler {
 		this.lotteryTicketsRoot = new LotteryTickets();
 		
 		for (int i=0; i<tickets.size(); i++) {
-			XMLGregorianCalendar ticketDateXML = tickets.get(i).getTicketDate();
-			Date ticketDate = ticketDateXML.toGregorianCalendar().getTime();
-			Date ticketDrawDate = LottoMachine.getNextDrawingDate(ticketDate);
-			if (ticketDrawDate.before(new Date())) {
+			XMLGregorianCalendar ticketDateXML = tickets.get(i).getFirstDrawingDate();
+			Date ticketDrawDate = ticketDateXML.toGregorianCalendar().getTime();
+			
+			//TODO: check if it works
+			if (ticketDrawDate.before(LottoMachine.getLastDrawingDate())) {
 				tickets.remove(i);
 				System.out.println("-> Removed ticket at pos" + i);
 			} else {

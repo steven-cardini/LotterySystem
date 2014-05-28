@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.8-b130911.1802 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.05.28 um 08:33:07 PM CEST 
+// Generiert: 2014.05.28 um 10:14:53 PM CEST 
 //
 
 
@@ -52,7 +52,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element name="ticket_date" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="first_drawing_date" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element ref="{http://www.ti.bfh.ch/euromillions/}validity_duration"/>
  *       &lt;/sequence>
  *       &lt;attribute name="ticket_id" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
@@ -67,7 +67,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "", propOrder = {
     "plays",
     "superStarNumbers",
-    "ticketDate",
+    "firstDrawingDate",
     "validityDuration"
 })
 @XmlRootElement(name = "lottery_ticket")
@@ -77,9 +77,9 @@ public class LotteryTicket {
     protected LotteryTicket.Plays plays;
     @XmlElement(name = "super_star_numbers")
     protected LotteryTicket.SuperStarNumbers superStarNumbers;
-    @XmlElement(name = "ticket_date", required = true)
+    @XmlElement(name = "first_drawing_date", required = true)
     @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar ticketDate;
+    protected XMLGregorianCalendar firstDrawingDate;
     @XmlElement(name = "validity_duration", namespace = "http://www.ti.bfh.ch/euromillions/")
     protected int validityDuration;
     @XmlAttribute(name = "ticket_id", required = true)
@@ -134,27 +134,27 @@ public class LotteryTicket {
     }
 
     /**
-     * Ruft den Wert der ticketDate-Eigenschaft ab.
+     * Ruft den Wert der firstDrawingDate-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getTicketDate() {
-        return ticketDate;
+    public XMLGregorianCalendar getFirstDrawingDate() {
+        return firstDrawingDate;
     }
 
     /**
-     * Legt den Wert der ticketDate-Eigenschaft fest.
+     * Legt den Wert der firstDrawingDate-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setTicketDate(XMLGregorianCalendar value) {
-        this.ticketDate = value;
+    public void setFirstDrawingDate(XMLGregorianCalendar value) {
+        this.firstDrawingDate = value;
     }
 
     /**

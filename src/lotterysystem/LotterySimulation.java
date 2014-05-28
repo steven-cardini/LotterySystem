@@ -24,22 +24,26 @@ public class LotterySimulation {
 	
 	private static LanguageHandler lang = new LanguageHandler();
 	private static ConsoleIOHandler io = new ConsoleIOHandler(lang);
-	private static File outputXMLFile = new File ("tickets.xml");
-	private static MarshalHandler marshalHandler;
+	private static boolean running;	
+
+	private File outputXMLFile = new File ("tickets.xml");
+	private MarshalHandler marshalHandler;
 	private TicketAnalyzer analyzer;
 
-	private static boolean running;	
+	
+	public LotterySimulation () throws JAXBException, IOException, ClassNotFoundException {
+		running = true;
+		LottoMachine.initialize();
+		marshalHandler = new MarshalHandler(outputXMLFile);
+		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getLastDrawingDate());
+	}
 	
 	
 	public static void main (String[] args) throws ClassNotFoundException, IOException, JAXBException {
-		running = true;
-		LottoMachine.initialize();
-		LotterySimulation sim = new LotterySimulation();
-		sim.drawNewWinningNumbers();
 		
-		marshalHandler = new MarshalHandler(outputXMLFile);
-				
+		LotterySimulation sim = new LotterySimulation();
 		io.printMessage(lang.getMessage("welcome"));
+		io.printMessage(lang.getMessage("drawing_date") + LottoMachine.getLastDrawingDate());
 		MenuSelection selected;
 		
 		while (running) {
@@ -74,7 +78,7 @@ public class LotterySimulation {
 		
 	private void drawNewWinningNumbers () throws ClassNotFoundException, IOException {
 		LottoMachine.draw();
-		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getLatestDrawingDate());
+		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getLastDrawingDate());
 	}
 	
 	private void inputNumbers () {
@@ -102,6 +106,7 @@ public class LotterySimulation {
 		}
 
 		
+		//TODO: outsource the following code lines
 		MainNumbers mainNrObj = new MainNumbers();
 		List<Integer> mainNrList = mainNrObj.getMainNumber();
 		mainNrList.addAll(toList(mainNumbers));
@@ -137,7 +142,7 @@ public class LotterySimulation {
 		
 		
 		LotteryTicket ticket = new LotteryTicket();
-		ticket.setTicketDate(xmlCal);
+		ticket.setFirstDrawingDate(xmlCal);
 		ticket.setPlays(playsObj);
 		ticket.setSuperStarNumbers(superStarObj);
 		ticket.setValidityDuration(1);
@@ -150,7 +155,8 @@ public class LotterySimulation {
 			e.printStackTrace();
 		}
 		
-		io.printMessage(lang.getMessage("drawing_date") + " " + LanguageHandler.formatDate(LottoMachine.getLatestDrawingDate(), lang.getCurrentLocale()) );
+		//TODO: now new input numbers are compared to the last winning numbers; a functionality must be implemented, where new winning numbers are drawn and tickets are evaluated
+		io.printMessage(lang.getMessage("drawing_date") + " " + LanguageHandler.formatDate(LottoMachine.getLastDrawingDate(), lang.getCurrentLocale()) );
 		io.printMessage(lang.getMessage("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
 		io.printMessage(lang.getMessage("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
 		io.printMessage(lang.getMessage("winning_super_star") + " " + LottoMachine.getWinningSuperStar());
