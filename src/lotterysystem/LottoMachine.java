@@ -31,8 +31,8 @@ public class LottoMachine {
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		String winningSuperStar = generateSuperStar();
 		
-		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, getNewDate());
-		
+		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, getNextDrawingDate(1));
+
 		saveWinningNumbers();
 	}
 
@@ -54,7 +54,7 @@ public class LottoMachine {
 		return currentWinningSet.getWinningSuperStar();
 	}
 	
-	public static Date getDrawingDate () {
+	public static Date getLatestDrawingDate () {
 		return currentWinningSet.getDrawingDate();
 	}
 	
@@ -92,6 +92,46 @@ public class LottoMachine {
 		} else {
 			loadWinningNumbers();
 		}
+	}
+	
+	//TODO: has to be improved; how shall the now-time be determined?
+	//Method yields date of next Nth drawing; the earliest possible date is "tomorrow"
+	public static Date getNextDrawingDate (int n) {
+		int k = 0;
+		Date newDate;
+		if (currentWinningSet != null) {
+			newDate = currentWinningSet.getDrawingDate();
+		} else {
+			newDate = new Date();
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(newDate);
+		int weekDay = cal.get(Calendar.DAY_OF_WEEK);
+		
+		do {
+			cal.add(Calendar.DATE, 1);
+			weekDay = cal.get(Calendar.DAY_OF_WEEK);
+			if (weekDay==2 || weekDay==6) k++;
+		
+		} while (k<n);
+			
+		return cal.getTime();
+	}
+	
+	//Method yields first drawing date after the given date; the earliest possible date is "tomorrow"
+	public static Date getNextDrawingDate (Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int weekDay = cal.get(Calendar.DAY_OF_WEEK);
+		
+		do {
+			cal.add(Calendar.DATE, 1);
+			weekDay = cal.get(Calendar.DAY_OF_WEEK);
+		
+		} while (weekDay!=2 && weekDay!=6);
+			
+		return cal.getTime();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -172,25 +212,5 @@ public class LottoMachine {
 		superStar += alphabet.substring(pos,pos+1);
 		return superStar;
 	}
-	
-	//Method yields date of next drawing; the earliest date is "tomorrow"
-	private static Date getNewDate () {
-		Date newDate;
-		if (currentWinningSet != null) {
-			newDate = currentWinningSet.getDrawingDate();
-		} else {
-			newDate = new Date();
-		}
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(newDate);
-		int weekDay = cal.get(Calendar.DAY_OF_WEEK);
-		
-		do 
-			cal.add(Calendar.DATE, 1);
-		while (weekDay!=2 && weekDay!=6);
-			
-		return cal.getTime();
-	}
-	
 }
