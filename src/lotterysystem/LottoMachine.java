@@ -21,9 +21,10 @@ public class LottoMachine {
 	private final static int MIN_STAR_NUMBER = 1;
 	private final static int MAX_STAR_NUMBER = 11;
 
-	private static File historyWinnersFile = new File ("historyWinningNumbers.bin");
+	private static File historyWinnersFile = LotterySimulation.historyWinningNumbersFile;
 	private static WinningNumbersSet currentWinningSet;
 	private static ArrayList<WinningNumbersSet> pastWinningSets;
+	private static Date nextDrawingDate;
 	
 	
 	public static void draw () throws ClassNotFoundException, IOException {
@@ -31,7 +32,8 @@ public class LottoMachine {
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		String winningSuperStar = generateSuperStar();
 		
-		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, getNextDrawingDate(1));
+		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, nextDrawingDate);
+		nextDrawingDate = calculateSubsequentDrawingDate();
 
 		saveWinningNumbers();
 	}
@@ -42,6 +44,9 @@ public class LottoMachine {
 		return formatted;
 	}
 	
+	
+	// WARNING: the following 4 methods may throw a null pointer exception if no draw has been made until now
+	// ----->
 	public static int[] getWinningMainNumbers () {
 		return currentWinningSet.getWinningMainNumbers();
 	}
@@ -56,6 +61,11 @@ public class LottoMachine {
 	
 	public static Date getLastDrawingDate () {
 		return currentWinningSet.getDrawingDate();
+	}
+	// <-----
+	
+	public static Date getNextDrawingDate () {
+		return nextDrawingDate;
 	}
 	
 	public static int getAmountMainNumbers () {
@@ -82,56 +92,73 @@ public class LottoMachine {
 		return MIN_STAR_NUMBER;
 	}
 	
-	
+	public static boolean isFirstDrawing () {
+		return currentWinningSet == null;
+	}
+		
 	static void initialize() throws ClassNotFoundException, IOException {
-		if (!historyWinnersFile.exists()) {
+		if (!historyWinnersFile.exists() || historyWinnersFile.length()<=1) {
 			historyWinnersFile.createNewFile();
 			pastWinningSets = new ArrayList<>();
-			draw();
-			saveWinningNumbers();
 		} else {
 			loadWinningNumbers();
 		}
+		nextDrawingDate = calculateSubsequentDrawingDate();
 	}
 	
-	//TODO: has to be improved; how shall the now-time be determined?
-	//Method yields date of next Nth drawing; the earliest possible date is "tomorrow"
-	public static Date getNextDrawingDate (int n) {
-		int k = 0;
-		Date newDate;
-		if (currentWinningSet != null) {
-			newDate = currentWinningSet.getDrawingDate();
-		} else {
-			newDate = new Date();
-		}
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(newDate);
-		int weekDay = cal.get(Calendar.DAY_OF_WEEK);
-		
-		do {
-			cal.add(Calendar.DATE, 1);
-			weekDay = cal.get(Calendar.DAY_OF_WEEK);
-			if (weekDay==3 || weekDay==6) k++;
-		
-		} while (k<n);
-			
-		return cal.getTime();
-	}
-	
-	//Method yields first drawing date after the given date; the earliest possible date is "tomorrow"
-	public static Date getNextDrawingDate (Date date) {
+	//Method yields date of next n-th drawing after the provided date (inclusive)
+	public static Date getFutureDrawingDate (Date date, int n) {
+		int counter = 0;
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		int weekDay = cal.get(Calendar.DAY_OF_WEEK);
 		
-		do {
+		while (counter<n) {
+			if (weekDay==3 || weekDay==6)
+				counter++;
+			if (counter==n)
+				break;
 			cal.add(Calendar.DATE, 1);
 			weekDay = cal.get(Calendar.DAY_OF_WEEK);
+		}
 		
-		} while (weekDay!=3 && weekDay!=6);
-			
 		return cal.getTime();
+	}
+	
+	// sorts a given int array from smallest to largest number
+	public static int[] sortNumbers (int[] numberArray) {
+		int length = numberArray.length;
+		int currentSortIndex = 0;
+		int[] sortedNumbers = new int[length];
+		int[] sortedIndexes = new int[length];
+		for (int i=0; i<length; i++) {
+			sortedNumbers[i] = Integer.MAX_VALUE;
+			sortedIndexes[i] = Integer.MAX_VALUE;
+		}
+		
+		while (currentSortIndex<length) {
+			for (int i=0; i<length; i++) {
+				if (alreadyContained(i,sortedIndexes)) continue;
+				if (numberArray[i]<sortedNumbers[currentSortIndex]) {
+					sortedNumbers[currentSortIndex] = numberArray[i];
+					sortedIndexes[currentSortIndex] = i;
+				}
+			}
+			currentSortIndex++;
+		}
+		return sortedNumbers;
+	}
+	
+	//Method yields the first drawing date after the latest drawing date
+	private static Date calculateSubsequentDrawingDate () {
+		Calendar cal = Calendar.getInstance();
+		if (currentWinningSet==null) {  // first drawing
+			cal.setTime(new Date());
+		} else {
+			cal.setTime(currentWinningSet.getDrawingDate());
+			cal.add(Calendar.DATE, 1);
+		}
+		return getFutureDrawingDate(cal.getTime(), 1);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -167,30 +194,7 @@ public class LottoMachine {
 		int drawnNumber = (int) (maxNumber * Math.random() + minNumber);		
 		return drawnNumber;
 	}
-	
-	private static int[] sortNumbers (int[] numberArray) {
-		int length = numberArray.length;
-		int currentSortIndex = 0;
-		int[] sortedNumbers = new int[length];
-		int[] sortedIndexes = new int[length];
-		for (int i=0; i<length; i++) {
-			sortedNumbers[i] = Integer.MAX_VALUE;
-			sortedIndexes[i] = Integer.MAX_VALUE;
-		}
 		
-		while (currentSortIndex<length) {
-			for (int i=0; i<length; i++) {
-				if (alreadyContained(i,sortedIndexes)) continue;
-				if (numberArray[i]<sortedNumbers[currentSortIndex]) {
-					sortedNumbers[currentSortIndex] = numberArray[i];
-					sortedIndexes[currentSortIndex] = i;
-				}
-			}
-			currentSortIndex++;
-		}
-		return sortedNumbers;
-	}
-	
 	private static boolean alreadyContained (int number, int[] numberArray) {
 		int length = numberArray.length;
 		for (int i=0; i<length; i++) {

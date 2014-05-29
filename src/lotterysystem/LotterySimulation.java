@@ -2,21 +2,7 @@ package lotterysystem;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import javax.xml.bind.JAXBException;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import jaxb_lotterytypes.LotteryTicket;
-import jaxb_lotterytypes.LotteryTicket.Plays;
-import jaxb_lotterytypes.LotteryTicket.SuperStarNumbers;
-import jaxb_lotterytypes.Play;
-import jaxb_lotterytypes.Play.MainNumbers;
-import jaxb_lotterytypes.Play.StarNumbers;
 import lotterysystem.LanguageHandler.*;
 import lotterysystem.IInputOutputHandler.*;
 
@@ -25,8 +11,9 @@ public class LotterySimulation {
 	private static LanguageHandler lang = new LanguageHandler();
 	private static ConsoleIOHandler io = new ConsoleIOHandler(lang);
 	private static boolean running;	
-
+	
 	private File outputXMLFile = new File ("tickets.xml");
+	static File historyWinningNumbersFile = new File ("winningNumbers.bin");
 	private MarshalHandler marshalHandler;
 	private TicketAnalyzer analyzer;
 
@@ -35,7 +22,7 @@ public class LotterySimulation {
 		running = true;
 		LottoMachine.initialize();
 		marshalHandler = new MarshalHandler(outputXMLFile);
-		analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getLastDrawingDate());
+		//analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getLastDrawingDate());
 	}
 	
 	
@@ -43,10 +30,10 @@ public class LotterySimulation {
 		
 		LotterySimulation sim = new LotterySimulation();
 		io.printMessage(lang.getMessage("welcome"));
-		io.printMessage(lang.getMessage("drawing_date") + LottoMachine.getLastDrawingDate());
 		MenuSelection selected;
 		
 		while (running) {
+			io.printMessage(lang.getMessage("next_drawing_date") + LottoMachine.getNextDrawingDate());
 			try {
 				selected = io.getMenuSelection();
 			} catch (IllegalArgumentException e) {
@@ -104,63 +91,27 @@ public class LotterySimulation {
 			io.printError(lang.getMessage("only_numbers_accepted"));
 			return;
 		}
-
 		
-		//TODO: outsource the following code lines
-		MainNumbers mainNrObj = new MainNumbers();
-		List<Integer> mainNrList = mainNrObj.getMainNumber();
-		mainNrList.addAll(toList(mainNumbers));
 		
-		StarNumbers starNrObj = new StarNumbers();
-		List<Integer> starNrList = starNrObj.getStarNumber();
-		starNrList.addAll(toList (starNumbers));
-		
-		Play playObj = new Play();
-		playObj.setMainNumbers(mainNrObj);
-		playObj.setStarNumbers(starNrObj);
-		
-		Plays playsObj = new Plays();
-		List<Play> playsList = playsObj.getPlay();
-		playsList.add(playObj);
-		
-		SuperStarNumbers superStarObj = new SuperStarNumbers();
-		List<String> superStarsList = superStarObj.getSuperStarNumber();
-		superStarsList.add(LottoMachine.generateSuperStar());
-		
-		GregorianCalendar gcal = new GregorianCalendar();
-		gcal.setTime(LottoMachine.getNextDrawingDate(1));
-		System.out.println("Next drawing date: " + LottoMachine.getNextDrawingDate(1));
-		
-		//TODO: improve and change so that drawing date is shown, not current date
-		XMLGregorianCalendar xmlCal = null;
+		//TODO: enable user to chose 1-4 given superstars, validity duration
 		try {
-			xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
-		} catch (DatatypeConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		LotteryTicket ticket = new LotteryTicket();
-		ticket.setFirstDrawingDate(xmlCal);
-		ticket.setPlays(playsObj);
-		ticket.setSuperStarNumbers(superStarObj);
-		ticket.setValidityDuration(1);
-		ticket.setTicketId(101);
-		
-		try {
-			marshalHandler.addTicket(ticket);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
+			marshalHandler.addTicket(LottoMachine.getNextDrawingDate(), 1, mainNumbers, starNumbers, LottoMachine.generateSuperStar());
+		} catch (Exception e) {
+			io.printError(lang.getMessage("persistency_error"));
 			e.printStackTrace();
 		}
 		
+		
+		/* TODO: needs to be handled by a separate class
+		
 		//TODO: now new input numbers are compared to the last winning numbers; a functionality must be implemented, where new winning numbers are drawn and tickets are evaluated
-		io.printMessage(lang.getMessage("drawing_date") + " " + LanguageHandler.formatDate(LottoMachine.getLastDrawingDate(), lang.getCurrentLocale()) );
+		io.printMessage(lang.getMessage("last_drawing_date") + " " + LanguageHandler.formatDate(LottoMachine.getLastDrawingDate(), lang.getCurrentLocale()) );
 		io.printMessage(lang.getMessage("your_numbers") + " " + LottoMachine.formatNumbers(mainNumbers) + " + " + LottoMachine.formatNumbers(starNumbers));
 		io.printMessage(lang.getMessage("winning_numbers") + " " + LottoMachine.formatNumbers(LottoMachine.getWinningMainNumbers()) + " + " + LottoMachine.formatNumbers(LottoMachine.getWinningStarNumbers()));
 		io.printMessage(lang.getMessage("winning_super_star") + " " + LottoMachine.getWinningSuperStar());
 		io.printMessage(lang.getMessage("amount_matching_numbers") + " " + analyzer.getAmountMatchingMainNumbers(mainNumbers) + " + " + analyzer.getAmountMatchingStarNumbers(starNumbers));
+		
+		*/
 	}
 	
 	private void changeLanguage () {
@@ -186,11 +137,5 @@ public class LotterySimulation {
 		int[] starNumbers = io.getNumbers(LottoMachine.getAmountStarNumber(), LottoMachine.getMaxStarNumber(), LottoMachine.getMinStarNumber());
 		return starNumbers;
 	}
-	
-	private static ArrayList<Integer> toList (int[] array) {
-		ArrayList<Integer> list = new ArrayList<>();
-		for (int i=0; i<array.length; i++)
-			list.add(new Integer(array[i]));
-		return list;
-	}
+
 }
