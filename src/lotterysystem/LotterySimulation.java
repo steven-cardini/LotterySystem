@@ -12,7 +12,8 @@ public class LotterySimulation {
 	private static ConsoleIOHandler io = new ConsoleIOHandler(lang);
 	private static boolean running;	
 	
-	private File outputXMLFile = new File ("tickets.xml");
+	static File outputXMLFile = new File ("tickets.xml");
+	static File archiveXMLFile = new File ("tickets_archive.xml");
 	static File historyWinningNumbersFile = new File ("winningNumbers.bin");
 	private MarshalHandler marshalHandler;
 	private TicketAnalyzer analyzer;
@@ -21,7 +22,7 @@ public class LotterySimulation {
 	public LotterySimulation () throws JAXBException, IOException, ClassNotFoundException {
 		running = true;
 		LottoMachine.initialize();
-		marshalHandler = new MarshalHandler(outputXMLFile);
+		marshalHandler = new MarshalHandler();
 		//analyzer = new TicketAnalyzer(LottoMachine.getWinningMainNumbers(), LottoMachine.getWinningStarNumbers(), LottoMachine.getWinningSuperStar(), LottoMachine.getLastDrawingDate());
 	}
 	
@@ -51,6 +52,9 @@ public class LotterySimulation {
 			case CHANGE_LANGUAGE:
 				sim.changeLanguage();
 				break;
+			case CLEAR_ALL:
+				sim.clearAll();
+				break;
 			case QUIT:
 				running = false;
 				break;
@@ -71,6 +75,7 @@ public class LotterySimulation {
 	private void inputNumbers () {
 		int[] mainNumbers=null;
 		int[] starNumbers = null;
+		int validityDuration = 0;
 		
 		try {
 			mainNumbers = this.getMainNumbers();
@@ -92,10 +97,19 @@ public class LotterySimulation {
 			return;
 		}
 		
+		io.printMessage(lang.getMessage("validity_duration"));
+		String s = io.scanInput();
+		try {
+			validityDuration = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			io.printError(lang.getMessage("only_numbers_accepted"));
+			return;
+		}
+		
 		
 		//TODO: enable user to chose 1-4 given superstars, validity duration
 		try {
-			marshalHandler.addTicket(LottoMachine.getNextDrawingDate(), 1, mainNumbers, starNumbers, LottoMachine.generateSuperStar());
+			marshalHandler.addTicket(LottoMachine.getNextDrawingDate(), validityDuration, mainNumbers, starNumbers, LottoMachine.generateSuperStar());
 		} catch (Exception e) {
 			io.printError(lang.getMessage("persistency_error"));
 			e.printStackTrace();
@@ -136,6 +150,13 @@ public class LotterySimulation {
 		io.printMessage(lang.getMessage("enter_star_numbers"));
 		int[] starNumbers = io.getNumbers(LottoMachine.getAmountStarNumber(), LottoMachine.getMaxStarNumber(), LottoMachine.getMinStarNumber());
 		return starNumbers;
+	}
+	
+	private void clearAll() {
+		outputXMLFile.delete();
+		archiveXMLFile.delete();
+		historyWinningNumbersFile.delete();
+		running=false;
 	}
 
 }

@@ -3,7 +3,7 @@ package lotterysystem;
 public interface IInputOutputHandler {
 	
 	public static enum MenuSelection {
-		CHANGE_LANGUAGE, DRAW_NUMBERS, INPUT_NUMBERS, QUIT;
+		CHANGE_LANGUAGE, DRAW_NUMBERS, INPUT_NUMBERS, CLEAR_ALL, QUIT;
 	}
 	
 	public void printMessage (String text);

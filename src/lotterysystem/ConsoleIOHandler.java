@@ -45,7 +45,7 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 		this.printMessage(lang.getMessage("console_main_menu"));
 		String input = this.scanInput().toLowerCase();
 		
-		if (!input.matches("[abhq]")) throw new IllegalArgumentException();
+		if (!input.matches("[a-z]")) throw new IllegalArgumentException();
 		
 		switch (input) {
 		case "a":
@@ -56,6 +56,8 @@ public class ConsoleIOHandler implements IInputOutputHandler {
 			return MenuSelection.CHANGE_LANGUAGE;
 		case "q":
 			return MenuSelection.QUIT;
+		case "x":
+			return MenuSelection.CLEAR_ALL;
 		default:
 			throw new IllegalArgumentException();
 		}
