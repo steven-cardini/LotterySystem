@@ -1,9 +1,227 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.Controller">
-  <!-- TODO Add Nodes -->
-</BorderPane>
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="480.0" prefWidth="600.0">
+         <children>
+            <MenuBar maxWidth="1.7976931348623157E308" prefWidth="600.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Buy Tickets">
+                  <content>
+                    <AnchorPane>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Next drawing date:" />
+                                          <Label text="Fri, May 30th 2014">
+                                             <HBox.margin>
+                                                <Insets left="25.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Pane prefHeight="30.0">
+                                       <children>
+                                          <Label alignment="BASELINE_LEFT" text="Enter 5 numbers between 1 - 50">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="100.0" top="15.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Pane>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Main Numbers:" />
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <Pane prefHeight="30.0">
+                                       <children>
+                                          <Label alignment="BASELINE_LEFT" text="Enter 2 numbers between 1 - 11">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="100.0" top="15.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Star Numbers:" />
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="25.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <TextField prefWidth="30.0">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                    <Pane prefHeight="30.0">
+                                       <children>
+                                          <Label alignment="BASELINE_LEFT" text="Choose between 0 - 3 super stars">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="100.0" top="20.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Star Stars:" />
+                                          <CheckBox mnemonicParsing="false" text="SuperStar1">
+                                             <HBox.margin>
+                                                <Insets left="50.0" />
+                                             </HBox.margin>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" text="SuperStar2">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </CheckBox>
+                                          <CheckBox mnemonicParsing="false" text="SuperStar3">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </CheckBox>
+                                       </children>
+                                    </HBox>
+                                    <Pane prefHeight="30.0">
+                                       <children>
+                                          <Label alignment="BASELINE_LEFT" text="Choose for how many drawings the ticket is valid:">
+                                             <font>
+                                                <Font name="System Italic" size="12.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="100.0" top="15.0" />
+                                             </padding>
+                                          </Label>
+                                       </children>
+                                    </Pane>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Validity duration:" />
+                                          <ChoiceBox prefWidth="50.0">
+                                             <HBox.margin>
+                                                <Insets left="40.0" />
+                                             </HBox.margin>
+                                          </ChoiceBox>
+                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Buy Ticket">
+                                             <HBox.margin>
+                                                <Insets left="250.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Draw Winners">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <Separator prefWidth="200.0" />
+            <Pane prefHeight="60.0">
+               <children>
+                  <Label fx:id="message" text="Welcome to EuroMillions!">
+                     <padding>
+                        <Insets left="20.0" top="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</FlowPane>
