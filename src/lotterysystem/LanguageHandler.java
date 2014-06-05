@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 public class LanguageHandler {
 	
-	enum Language {
+	public enum Language {
 		ENGLISH, GERMAN;
 	}
 	
@@ -19,7 +19,7 @@ public class LanguageHandler {
 	private ResourceBundle messages;
 	private Language currentLanguage;
 	
-	LanguageHandler () {
+	public LanguageHandler () {
 		languageMap = new HashMap<>();
 		languageMap.put(Language.ENGLISH, Locale.ENGLISH);
 		languageMap.put(Language.GERMAN, Locale.GERMAN);
@@ -27,20 +27,24 @@ public class LanguageHandler {
 		setLanguage(defaultLanguage);
 	}
 	
-	void setLanguage (Language lang) {
+	public LanguageHandler (ResourceBundle resources) {
+		this();
+	}
+	
+	public void setLanguage (Language lang) {
 		messages = ResourceBundle.getBundle (resourceBaseName, languageMap.get(lang));
 		currentLanguage = lang;
 	}
 	
-	String getMessage (String key) {
+	public String getMessage (String key) {
 		return messages.getString(key);
 	}
 	
-	Locale getCurrentLocale () {
+	public Locale getCurrentLocale () {
 		return languageMap.get(currentLanguage);
 	}
 	
-	static String formatDate (Date date, Locale locale) {
+	public static String formatDate (Date date, Locale locale) {
 		DateFormat df = DateFormat.getDateInstance(0, locale);
 		return df.format(date);
 	}

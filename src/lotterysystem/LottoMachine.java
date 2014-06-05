@@ -96,7 +96,7 @@ public class LottoMachine {
 		return currentWinningSet == null;
 	}
 		
-	static void initialize() throws ClassNotFoundException, IOException {
+	public static void initialize() throws ClassNotFoundException, IOException {
 		if (!historyWinnersFile.exists() || historyWinnersFile.length()<=1) {
 			historyWinnersFile.createNewFile();
 			pastWinningSets = new ArrayList<>();
@@ -204,7 +204,7 @@ public class LottoMachine {
 		return false;
 	}
 	
-	static String generateSuperStar () {
+	public static String generateSuperStar () {
 		Random r = new Random();
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		int pos = r.nextInt(alphabet.length());

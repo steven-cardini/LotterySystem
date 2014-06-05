@@ -63,7 +63,7 @@ public class MarshalHandler {
 		this.outputFile = f;
 	}
 
-	public void addTicket(Date nextDrawingDate, int validityDuration, int[] mainNumbers, int[] starNumbers, String superStar) throws DatatypeConfigurationException, JAXBException {
+	public void addTicket(int validityDuration, int[] mainNumbers, int[] starNumbers, String[] superStars) throws DatatypeConfigurationException, JAXBException {
 		// Sort numbers
 		mainNumbers = LottoMachine.sortNumbers(mainNumbers);
 		starNumbers = LottoMachine.sortNumbers(starNumbers);
@@ -86,11 +86,15 @@ public class MarshalHandler {
 		playsList.add(playObj);
 		
 		SuperStarNumbers superStarObj = objFact.createLotteryTicketSuperStarNumbers();
-		List<String> superStarsList = superStarObj.getSuperStarNumber();
-		superStarsList.add(superStar);
 
+		List<String> superStarsList = superStarObj.getSuperStarNumber();
+		for (int i=0; i<superStars.length; i++) {
+			if (superStars[i]!=null)
+				superStarsList.add(superStars[i]);
+		}
+		
 		GregorianCalendar gcal = new GregorianCalendar();
-		gcal.setTime(nextDrawingDate);
+		gcal.setTime(LottoMachine.getNextDrawingDate());
 		XMLGregorianCalendar xmlCal = null;
 		xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gcal);
 

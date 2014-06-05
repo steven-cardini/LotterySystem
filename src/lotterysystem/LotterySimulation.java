@@ -1,8 +1,14 @@
 package lotterysystem;
 
+import gui.Main;
+
 import java.io.File;
 import java.io.IOException;
+
+import javafx.stage.Stage;
+
 import javax.xml.bind.JAXBException;
+
 import lotterysystem.LanguageHandler.*;
 import lotterysystem.IInputOutputHandler.*;
 
@@ -32,6 +38,7 @@ public class LotterySimulation {
 		LotterySimulation sim = new LotterySimulation();
 		io.printMessage(lang.getMessage("welcome"));
 		MenuSelection selected;
+
 		
 		while (running) {
 			io.printMessage(lang.getMessage("next_drawing_date") + LottoMachine.getNextDrawingDate());
@@ -109,7 +116,7 @@ public class LotterySimulation {
 		
 		//TODO: enable user to chose 1-4 given superstars, validity duration
 		try {
-			marshalHandler.addTicket(LottoMachine.getNextDrawingDate(), validityDuration, mainNumbers, starNumbers, LottoMachine.generateSuperStar());
+			marshalHandler.addTicket(validityDuration, mainNumbers, starNumbers, LottoMachine.generateSuperStar());
 		} catch (Exception e) {
 			io.printError(lang.getMessage("persistency_error"));
 			e.printStackTrace();

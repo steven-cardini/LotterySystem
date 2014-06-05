@@ -10,27 +10,27 @@
 
 <FlowPane prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <children>
+      <MenuBar maxWidth="1.7976931348623157E308" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="%file">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="%help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
       <VBox prefHeight="480.0" prefWidth="600.0">
          <children>
-            <MenuBar maxWidth="1.7976931348623157E308" prefWidth="600.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="%file">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="%edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="%help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
             <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="%buy_tickets_tab">
@@ -42,7 +42,7 @@
                                     <HBox alignment="CENTER_LEFT">
                                        <children>
                                           <Label text="%next_drawing_date" />
-                                          <Label text="Fri, May 30th 2014">
+                                          <Label fx:id="labelNextDrawingDate" text="Fri, May 30th 2014">
                                              <HBox.margin>
                                                 <Insets left="25.0" />
                                              </HBox.margin>
@@ -85,27 +85,27 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                                        <children>
                                           <Label text="%main_numbers" />
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldMainNumber0" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldMainNumber1" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldMainNumber2" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldMainNumber3" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldMainNumber4" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
@@ -127,12 +127,12 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                                        <children>
                                           <Label text="%star_numbers" />
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldStarNumber0" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="25.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField prefWidth="30.0">
+                                          <TextField fx:id="fieldStarNumber1" prefWidth="30.0">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
@@ -154,17 +154,17 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                                        <children>
                                           <Label text="%super_stars" />
-                                          <CheckBox mnemonicParsing="false" text="SuperStar1">
+                                          <CheckBox fx:id="superStar1" mnemonicParsing="false" text="SuperStar1">
                                              <HBox.margin>
                                                 <Insets left="50.0" />
                                              </HBox.margin>
                                           </CheckBox>
-                                          <CheckBox mnemonicParsing="false" text="SuperStar2">
+                                          <CheckBox fx:id="superStar2" mnemonicParsing="false" text="SuperStar2">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
                                           </CheckBox>
-                                          <CheckBox mnemonicParsing="false" text="SuperStar3">
+                                          <CheckBox fx:id="superStar3" mnemonicParsing="false" text="SuperStar3">
                                              <HBox.margin>
                                                 <Insets left="20.0" />
                                              </HBox.margin>
@@ -186,13 +186,13 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                                        <children>
                                           <Label text="%validity_duration_txt" />
-                                          <ChoiceBox fx:id="listValidityDuration">
+                                          <ChoiceBox fx:id="listValidityDuration" prefWidth="40.0">
                                              <HBox.margin>
                                                 <Insets left="40.0" />
                                              </HBox.margin>
                                  
                                           </ChoiceBox>
-                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="%buy_ticket_button">
+                                          <Button fx:id="buttonBuyTicket" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actionBuyTicket" text="%buy_ticket_button">
                                              <HBox.margin>
                                                 <Insets left="250.0" />
                                              </HBox.margin>

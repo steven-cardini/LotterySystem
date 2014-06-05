@@ -14,11 +14,12 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	
 	private static Locale locale = new Locale("en","US");
+	private static String bundleName = "messages";
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("Main.fxml"), ResourceBundle.getBundle("messages", locale));	
+			FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("Main.fxml"), ResourceBundle.getBundle(bundleName, locale));	
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -29,7 +30,9 @@ public class Main extends Application {
 		}
 	}
 	
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }
