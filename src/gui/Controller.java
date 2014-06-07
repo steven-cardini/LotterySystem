@@ -1,15 +1,7 @@
 package gui;
 
-import java.awt.Font;
-import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.datatype.DatatypeConfigurationException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,9 +23,6 @@ import lotterysystem.LanguageHandler.Language;
 import lotterysystem.NumberOutOfRangeException;
 
 public class Controller implements Initializable {
-
-	@SuppressWarnings("unused")
-	private URL location;
 
 	@FXML
 	private Label langEN;
@@ -82,23 +71,21 @@ public class Controller implements Initializable {
 
 	@FXML
 	private Label message;
+	
+	ObservableList<String> validityList = FXCollections.observableArrayList("1", "2", "4", "6", "8", "10");
 
 	private MarshalHandler marshalHandler;
-	private Locale locale;
-	private LanguageHandler languageHandler;
-	ObservableList<String> validityList = FXCollections.observableArrayList(
-			"1", "2", "4", "6", "8", "10");
+	private LanguageHandler languageHandler = new LanguageHandler (Language.ENGLISH);
+	
 
 	@FXML
 	void langSwitchEnglish(MouseEvent event) {
-		this.languageHandler.setLanguage(Language.ENGLISH);
-		System.out.println("eng");
+		languageHandler.setLanguage(Language.ENGLISH);
 	}
 
 	@FXML
 	void langSwitchGerman(MouseEvent event) {
-		this.languageHandler.setLanguage(Language.GERMAN);
-		System.out.println("ger");
+		languageHandler.setLanguage(Language.GERMAN);
 	}
 	
 	//TODO: support multiple super stars!
@@ -135,14 +122,12 @@ public class Controller implements Initializable {
 			printError("Error in persistence!");
 			return;
 		}
+		
+		printSuccess("Ticket successfully bought!");
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.location = location;
-		this.locale = resources.getLocale();
-		this.languageHandler = new LanguageHandler(resources);
-
 		try {
 			this.marshalHandler = new MarshalHandler();
 		} catch (Exception e) {
@@ -154,21 +139,26 @@ public class Controller implements Initializable {
 		} catch (Exception e) {
 			printError("An error occurred upon initialization of the Lotto Machine");
 		}
-
-		String nextDrawingDate = LanguageHandler.formatDate(
-				LottoMachine.getNextDrawingDate(), this.locale);
+		
+		System.out.println(LottoMachine.getNextDrawingDate());
+		String nextDrawingDate = languageHandler.formatDate(LottoMachine.getNextDrawingDate());
 		labelNextDrawingDate.setText(nextDrawingDate);
 		superStar1.setText(LottoMachine.generateSuperStar());
 		superStar2.setText(LottoMachine.generateSuperStar());
 		superStar3.setText(LottoMachine.generateSuperStar());
 		listValidityDuration.setItems(validityList);
-		resources = ResourceBundle.getBundle("messages", new Locale("de"));
 	}
 
 	private void printError(String errorMessage) {
 		Paint paint = Color.rgb(255, 10, 10);
 		message.setTextFill(paint);
 		message.setText(errorMessage);
+	}
+	
+	private void printSuccess(String successMessage) {
+		Paint paint = Color.rgb(5, 140, 5);
+		message.setTextFill(paint);
+		message.setText(successMessage);
 	}
 
 	private int[] parseMainNumbers() throws NumberFormatException, NumberOutOfRangeException {
@@ -216,5 +206,4 @@ public class Controller implements Initializable {
 		
 		return superStars;
 	}
-
 }

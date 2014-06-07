@@ -1,51 +1,58 @@
 package lotterysystem;
 
+import gui.*;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LanguageHandler {
 	
 	public enum Language {
-		ENGLISH, GERMAN;
+		ENGLISH ("en"), GERMAN ("de");
+		private String code;
+		private Locale locale;
+		
+		Language (String code) {
+			this.code = code;
+			this.locale = new Locale (code);
+		}
+		
+		public String getCode () {
+			return this.code;
+		}
+		
+		public Locale getLocale () {
+			return this.locale;
+		}
 	}
 	
 	private final String resourceBaseName = "messages";
-	private final Language defaultLanguage = Language.ENGLISH;
 	
-	private HashMap<Language, Locale> languageMap;
 	private ResourceBundle messages;
 	private Language currentLanguage;
 	
-	public LanguageHandler () {
-		languageMap = new HashMap<>();
-		languageMap.put(Language.ENGLISH, Locale.ENGLISH);
-		languageMap.put(Language.GERMAN, Locale.GERMAN);
-		
-		setLanguage(defaultLanguage);
-	}
-	
-	public LanguageHandler (ResourceBundle resources) {
-		this();
+	public LanguageHandler (Language lang) {
+		this.messages = ResourceBundle.getBundle (resourceBaseName, lang.getLocale());
+		this.currentLanguage = lang;
 	}
 	
 	public void setLanguage (Language lang) {
-		messages = ResourceBundle.getBundle (resourceBaseName, languageMap.get(lang));
-		currentLanguage = lang;
+		this.messages = ResourceBundle.getBundle (resourceBaseName, lang.getLocale());
+		this.currentLanguage = lang;
+		Main.getInstance().setLanguage(lang.getLocale());
 	}
 	
 	public String getMessage (String key) {
-		return messages.getString(key);
+		return this.messages.getString(key);
 	}
 	
 	public Locale getCurrentLocale () {
-		return languageMap.get(currentLanguage);
+		return this.currentLanguage.getLocale();
 	}
 	
-	public static String formatDate (Date date, Locale locale) {
-		DateFormat df = DateFormat.getDateInstance(0, locale);
+	public String formatDate (Date date) {
+		DateFormat df = DateFormat.getDateInstance(0, this.currentLanguage.getLocale());
 		return df.format(date);
 	}
 }

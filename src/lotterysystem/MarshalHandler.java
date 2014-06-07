@@ -23,8 +23,8 @@ public class MarshalHandler {
 
 	private LotteryTickets lotteryTicketsRoot;
 	private LotteryTickets archiveTicketsRoot;
-	private File outputFile;
-	private File archiveFile;
+	private File outputFile = new File ("tickets.xml");
+	private File archiveFile = new File ("tickets_archive.xml");
 	private Marshaller marshaller;
 	private Unmarshaller unmarshaller;
 	private ObjectFactory objFact;
@@ -39,11 +39,9 @@ public class MarshalHandler {
 		
 		this.objFact = new ObjectFactory();
 
-		this.outputFile = LotterySimulation.outputXMLFile;
 		if (!outputFile.exists())
 			outputFile.createNewFile();
 		
-		this.archiveFile = LotterySimulation.archiveXMLFile;
 		if (!archiveFile.exists())
 			archiveFile.createNewFile();
 

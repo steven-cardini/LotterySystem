@@ -13,13 +13,33 @@ import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
 	
-	private static Locale locale = new Locale("en","US");
-	private static String bundleName = "messages";
+	private Locale locale = new Locale("en","US");
+	private String bundleName = "messages";
+	private Stage stage;
+	
+	private static Main instance;
+	
+	public Main() {
+		instance = this;
+	}
+	
+	// static method to get instance of view
+	public static Main getInstance() {
+		return instance;
+	}
+	
+	public void setLanguage (Locale locale) {
+		this.locale = locale;
+		this.stage.close();
+		this.start(new Stage());
+	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) {
+		this.stage = primaryStage;
 		try {
-			FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("Main.fxml"), ResourceBundle.getBundle(bundleName, locale));	
+			FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("Main.fxml"), ResourceBundle.getBundle(bundleName, locale));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

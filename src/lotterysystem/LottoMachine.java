@@ -21,7 +21,7 @@ public class LottoMachine {
 	private final static int MIN_STAR_NUMBER = 1;
 	private final static int MAX_STAR_NUMBER = 11;
 
-	private static File historyWinnersFile = LotterySimulation.historyWinningNumbersFile;
+	private static File historyWinnersFile = new File ("winningNumbers.bin");
 	private static WinningNumbersSet currentWinningSet;
 	private static ArrayList<WinningNumbersSet> pastWinningSets;
 	private static Date nextDrawingDate;

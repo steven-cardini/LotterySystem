@@ -39,17 +39,17 @@
                            <children>
                               <VBox prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER_LEFT">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="30.0">
                                        <children>
-                                          <Label text="%next_drawing_date" />
-                                          <Label fx:id="labelNextDrawingDate" text="Fri, May 30th 2014">
+                                          <Label prefWidth="160.0" text="%next_drawing_date" />
+                                          <Label fx:id="labelNextDrawingDate" prefWidth="250.0" text="Fri, May 30th 2014">
                                              <HBox.margin>
-                                                <Insets left="25.0" />
+                                                <Insets />
                                              </HBox.margin>
                                           </Label>
                                           <Label fx:id="langEN" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#langSwitchEnglish" text="EN">
                                              <HBox.margin>
-                                                <Insets left="280.0" />
+                                                <Insets left="100.0" />
                                              </HBox.margin>
                                           </Label>
                                           <Separator orientation="VERTICAL" prefHeight="10.0">
