@@ -32,15 +32,16 @@ public class LanguageHandler {
 	private ResourceBundle messages;
 	private Language currentLanguage;
 	
-	public LanguageHandler (Language lang) {
-		this.messages = ResourceBundle.getBundle (resourceBaseName, lang.getLocale());
-		this.currentLanguage = lang;
+	public LanguageHandler (Language language) {
+		this.currentLanguage = language;
+		this.messages = ResourceBundle.getBundle (resourceBaseName, this.currentLanguage.getLocale());
 	}
 	
 	public void setLanguage (Language lang) {
 		this.messages = ResourceBundle.getBundle (resourceBaseName, lang.getLocale());
+		System.out.println(lang.getLocale());
 		this.currentLanguage = lang;
-		Main.getInstance().setLanguage(lang.getLocale());
+		Main.getInstance().setLanguage(lang);
 	}
 	
 	public String getMessage (String key) {

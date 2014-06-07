@@ -1,6 +1,5 @@
 package gui;
 	
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import gui.Main;
@@ -9,11 +8,12 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.fxml.FXMLLoader;
+import lotterysystem.LanguageHandler.Language;
 
 
 public class Main extends Application {
 	
-	private Locale locale = new Locale("en","US");
+	private Language currentLanguage = Language.ENGLISH;	// default language is English
 	private String bundleName = "messages";
 	private Stage stage;
 	
@@ -28,10 +28,14 @@ public class Main extends Application {
 		return instance;
 	}
 	
-	public void setLanguage (Locale locale) {
-		this.locale = locale;
+	public void setLanguage (Language language) {
+		this.currentLanguage = language;
 		this.stage.close();
 		this.start(new Stage());
+	}
+	
+	public Language getLanguage () {
+		return this.currentLanguage;
 	}
 	
 	
@@ -39,7 +43,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		this.stage = primaryStage;
 		try {
-			FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("Main.fxml"), ResourceBundle.getBundle(bundleName, locale));
+			FlowPane root = (FlowPane)FXMLLoader.load(getClass().getResource("Main.fxml"), ResourceBundle.getBundle(bundleName, currentLanguage.getLocale()));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

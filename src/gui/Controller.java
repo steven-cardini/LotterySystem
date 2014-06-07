@@ -75,7 +75,7 @@ public class Controller implements Initializable {
 	ObservableList<String> validityList = FXCollections.observableArrayList("1", "2", "4", "6", "8", "10");
 
 	private MarshalHandler marshalHandler;
-	private LanguageHandler languageHandler = new LanguageHandler (Language.ENGLISH);
+	private LanguageHandler languageHandler = new LanguageHandler (Main.getInstance().getLanguage());
 	
 
 	@FXML
@@ -99,7 +99,7 @@ public class Controller implements Initializable {
 		try {
 			validityDuration = Integer.parseInt(listValidityDuration.getValue());
 		} catch (NumberFormatException e) {
-			printError("Choose a validity duration!");
+			printError("no_validity_duration");
 			return;
 		}
 		
@@ -107,10 +107,10 @@ public class Controller implements Initializable {
 			mainNumbers = this.parseMainNumbers();
 			starNumbers = this.parseStarNumbers();
 		} catch (NumberFormatException e) {
-			printError("Only numbers accepted!");
+			printError("only_numbers_accepted");
 			return;
 		} catch (NumberOutOfRangeException e) {
-			printError ("One or more number(s) out of range!");
+			printError ("numbers_out_of_range");
 			return;
 		}
 		
@@ -119,11 +119,11 @@ public class Controller implements Initializable {
 		try {
 			marshalHandler.addTicket(validityDuration, mainNumbers, starNumbers, superStars);
 		} catch (Exception e) {
-			printError("Error in persistence!");
+			printError("xml_save_error");
 			return;
 		}
 		
-		printSuccess("Ticket successfully bought!");
+		printSuccess("successful_buy");
 	}
 
 	@Override
@@ -131,16 +131,15 @@ public class Controller implements Initializable {
 		try {
 			this.marshalHandler = new MarshalHandler();
 		} catch (Exception e) {
-			printError("An error ocurred setting up the XML File!");
+			printError("xml_initial_error");
 		}
 
 		try {
 			LottoMachine.initialize();
 		} catch (Exception e) {
-			printError("An error occurred upon initialization of the Lotto Machine");
+			printError("lotto_machine_error");
 		}
 		
-		System.out.println(LottoMachine.getNextDrawingDate());
 		String nextDrawingDate = languageHandler.formatDate(LottoMachine.getNextDrawingDate());
 		labelNextDrawingDate.setText(nextDrawingDate);
 		superStar1.setText(LottoMachine.generateSuperStar());
@@ -149,16 +148,16 @@ public class Controller implements Initializable {
 		listValidityDuration.setItems(validityList);
 	}
 
-	private void printError(String errorMessage) {
+	private void printError(String errorMessageKey) {
 		Paint paint = Color.rgb(255, 10, 10);
 		message.setTextFill(paint);
-		message.setText(errorMessage);
+		message.setText(languageHandler.getMessage(errorMessageKey));
 	}
 	
-	private void printSuccess(String successMessage) {
+	private void printSuccess(String successMessageKey) {
 		Paint paint = Color.rgb(5, 140, 5);
 		message.setTextFill(paint);
-		message.setText(successMessage);
+		message.setText(languageHandler.getMessage(successMessageKey));
 	}
 
 	private int[] parseMainNumbers() throws NumberFormatException, NumberOutOfRangeException {
