@@ -27,7 +27,7 @@ import lotterysystem.NumberOutOfRangeException;
 
 public class Controller implements Initializable {
 	
-	private static final int SIMULATION_NUMBER = 100000;
+	private static final int MAX_SIMULATION_NUMBER = 1000000;
 	
 	// Tab 1
 	
@@ -162,6 +162,12 @@ public class Controller implements Initializable {
 	@FXML
     private Label labelSuperStarRank9;
 	
+	@FXML
+    private Label labelTotalNumberTickets;
+	
+	@FXML
+    private TextField fieldAmountRandomTickets;
+	
     @FXML
     private Button buttonSimulateBuys;
 
@@ -214,6 +220,8 @@ public class Controller implements Initializable {
 			
 			labelWinningSuperStar.setText(superStar);
 			
+			labelTotalNumberTickets.setText(Integer.toString(marshalHandler.getLotteryTickets().size()));
+			
 			int[] numberWinners = LottoMachine.getResults().getWinnersPerNumberRank();
 			labelNumberRank0.setText(Integer.toString(numberWinners[0]));
 			labelNumberRank1.setText(Integer.toString(numberWinners[1]));
@@ -239,7 +247,7 @@ public class Controller implements Initializable {
 			labelSuperStarRank3.setText(Integer.toString(superStarWinners[6]));
 			labelSuperStarRank2.setText(Integer.toString(superStarWinners[7]));
 			labelSuperStarRank1.setText(Integer.toString(superStarWinners[8]));
-}
+		}
 		
 		
 	}
@@ -297,6 +305,20 @@ public class Controller implements Initializable {
     	
     	printSuccess("creating_random");
     	
+    	int amount = 0;
+    	
+    	try {
+    		amount = Integer.parseInt(fieldAmountRandomTickets.getText());
+    	} catch (NumberFormatException e) {
+    		printError("random_error");
+    		return;
+    	}
+    	
+    	if (amount<=0 || amount > MAX_SIMULATION_NUMBER) {
+    		printError("random_error");
+    		return;
+    	}
+    	
     	Random rand = new Random();
     	
     	int[] validityDurations = new int [validityList.size()];
@@ -309,11 +331,11 @@ public class Controller implements Initializable {
     	int amountSuperStars=0;
     	String[] superStars = null;
     	
-    	for (int i=0; i<SIMULATION_NUMBER; i++) {
+    	for (int i=0; i<amount; i++) {
     		validityDuration = validityDurations[rand.nextInt(validityDurations.length)];
     		mainNumbers = LottoMachine.getRandomNumbers(LottoMachine.getAmountMainNumbers(), LottoMachine.getMinMainNumber(), LottoMachine.getMaxMainNumber());
     		starNumbers = LottoMachine.getRandomNumbers(LottoMachine.getAmountStarNumber(), LottoMachine.getMinStarNumber(), LottoMachine.getMaxStarNumber());
-    		amountSuperStars = rand.nextInt(4)+1;
+    		amountSuperStars = rand.nextInt(5);
     		superStars = new String[amountSuperStars];
     		for (int j=0; j<amountSuperStars; j++)
     			superStars[j] = LottoMachine.generateSuperStar();

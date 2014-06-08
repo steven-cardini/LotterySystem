@@ -144,12 +144,11 @@ public class MarshalHandler {
 	}
 
 	// Removes old tickets and adds them to the archive XML-file
-	public void archiveOldTickets() {
+	public void archiveOldTickets() throws JAXBException {
 		if (this.lotteryTicketsRoot == null || LottoMachine.isFirstDrawing())
 			return;
 
-		List<LotteryTicket> currentTickets = lotteryTicketsRoot
-				.getLotteryTicket();
+		List<LotteryTicket> currentTickets = lotteryTicketsRoot.getLotteryTicket();
 		this.lotteryTicketsRoot = objFact.createLotteryTickets();
 
 		for (int i = 0; i < currentTickets.size(); i++) {
@@ -168,6 +167,8 @@ public class MarshalHandler {
 				this.lotteryTicketsRoot.getLotteryTicket().add(
 						currentTickets.get(i));
 		}
+		
+		this.saveLotteryTickets();
 
 	}
 

@@ -9,478 +9,618 @@
 <?import javafx.scene.layout.FlowPane?>
 
 <FlowPane prefHeight="480.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
-   <children>
-      <MenuBar maxWidth="1.7976931348623157E308" prefWidth="600.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="%file">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="%edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="%help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <VBox prefHeight="480.0" prefWidth="600.0">
-         <children>
-            <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="%buy_tickets_tab">
-                  <content>
-                    <AnchorPane>
-                           <children>
-                              <VBox prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="30.0">
+	<children>
+		<MenuBar maxWidth="1.7976931348623157E308" prefWidth="600.0">
+			<menus>
+				<Menu mnemonicParsing="false" text="%file">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Close" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="%edit">
+					<items>
+						<MenuItem mnemonicParsing="false" text="Delete" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="%help">
+					<items>
+						<MenuItem mnemonicParsing="false" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+		<VBox prefHeight="480.0" prefWidth="600.0">
+			<children>
+				<TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+					<tabs>
+						<Tab text="%buy_tickets_tab">
+							<content>
+								<AnchorPane>
+									<children>
+										<VBox prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+											<children>
+												<HBox alignment="CENTER_LEFT" prefHeight="30.0">
+													<children>
+														<Label prefWidth="160.0" text="%next_drawing_date" />
+														<Label fx:id="labelNextDrawingDate" prefWidth="250.0" text="Fri, May 30th 2014">
+															<HBox.margin>
+																<Insets />
+															</HBox.margin>
+														</Label>
+														<Label fx:id="langEN" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#langSwitchEnglish" text="EN">
+															<HBox.margin>
+																<Insets left="100.0" />
+															</HBox.margin>
+														</Label>
+														<Separator orientation="VERTICAL" prefHeight="10.0">
+															<HBox.margin>
+																<Insets left="5.0" />
+															</HBox.margin>
+														</Separator>
+														<Label fx:id="langDE" onMouseClicked="#langSwitchGerman" text="DE">
+															<HBox.margin>
+																<Insets left="5.0" />
+															</HBox.margin>
+														</Label>
+													</children>
+													<VBox.margin>
+														<Insets top="25.0" />
+													</VBox.margin>
+												</HBox>
+												<Pane prefHeight="30.0">
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%enter_main_numbers">
+															<font>
+																<Font name="System Italic" size="12.0" />
+															</font>
+															<padding>
+																<Insets left="100.0" top="15.0" />
+															</padding>
+														</Label>
+													</children>
+													<VBox.margin>
+														<Insets />
+													</VBox.margin>
+												</Pane>
+												<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+													<children>
+														<Label text="%main_numbers" />
+														<TextField fx:id="fieldMainNumber0" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</TextField>
+														<TextField fx:id="fieldMainNumber1" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</TextField>
+														<TextField fx:id="fieldMainNumber2" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</TextField>
+														<TextField fx:id="fieldMainNumber3" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</TextField>
+														<TextField fx:id="fieldMainNumber4" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</TextField>
+													</children>
+												</HBox>
+												<Pane prefHeight="30.0">
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%enter_star_numbers">
+															<font>
+																<Font name="System Italic" size="12.0" />
+															</font>
+															<padding>
+																<Insets left="100.0" top="15.0" />
+															</padding>
+														</Label>
+													</children>
+												</Pane>
+												<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+													<children>
+														<Label text="%star_numbers" />
+														<TextField fx:id="fieldStarNumber0" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="25.0" />
+															</HBox.margin>
+														</TextField>
+														<TextField fx:id="fieldStarNumber1" prefWidth="30.0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</TextField>
+													</children>
+												</HBox>
+												<Pane prefHeight="30.0">
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%choose_super_stars">
+															<font>
+																<Font name="System Italic" size="12.0" />
+															</font>
+															<padding>
+																<Insets left="100.0" top="20.0" />
+															</padding>
+														</Label>
+													</children>
+												</Pane>
+												<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+													<children>
+														<Label text="%super_stars" />
+														<CheckBox fx:id="superStar1" mnemonicParsing="false" text="SuperStar1">
+															<HBox.margin>
+																<Insets left="50.0" />
+															</HBox.margin>
+														</CheckBox>
+														<CheckBox fx:id="superStar2" mnemonicParsing="false" text="SuperStar2">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</CheckBox>
+														<CheckBox fx:id="superStar3" mnemonicParsing="false" text="SuperStar3">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</CheckBox>
+														<CheckBox fx:id="superStar4" mnemonicParsing="false" text="SuperStar4">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</CheckBox>
+													</children>
+												</HBox>
+												<Pane prefHeight="30.0">
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%validity_duration">
+															<font>
+																<Font name="System Italic" size="12.0" />
+															</font>
+															<padding>
+																<Insets left="100.0" top="15.0" />
+															</padding>
+														</Label>
+													</children>
+												</Pane>
+												<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+													<children>
+														<Label text="%validity_duration_txt" />
+														<ChoiceBox fx:id="listValidityDuration" prefWidth="40.0">
+															<HBox.margin>
+																<Insets left="40.0" />
+															</HBox.margin>
+
+														</ChoiceBox>
+													</children>
+												</HBox>
+												<HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
+													<children>
+														<Button fx:id="buttonBuyTicket" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actionBuyTicket" text="%buy_ticket_button">
+															<HBox.margin>
+																<Insets right="20.0" />
+															</HBox.margin>
+														</Button>
+													</children>
+												</HBox>
+											</children>
+										</VBox>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+						<Tab text="%draw_winners_tab">
+							<content>
+								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+									<children>
+										<VBox prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+											<children>
+                                    <Pane layoutX="10.0" layoutY="124.0">
                                        <children>
-                                          <Label prefWidth="160.0" text="%next_drawing_date" />
-                                          <Label fx:id="labelNextDrawingDate" prefWidth="250.0" text="Fri, May 30th 2014">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label fx:id="langEN" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#langSwitchEnglish" text="EN">
-                                             <HBox.margin>
-                                                <Insets left="100.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Separator orientation="VERTICAL" prefHeight="10.0">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </Separator>
-                                          <Label fx:id="langDE" onMouseClicked="#langSwitchGerman" text="DE">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="25.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Pane prefHeight="30.0">
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%enter_main_numbers">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="100.0" top="15.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-                                       <children>
-                                          <Label text="%main_numbers" />
-                                          <TextField fx:id="fieldMainNumber0" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="fieldMainNumber1" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="fieldMainNumber2" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="fieldMainNumber3" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="fieldMainNumber4" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                    </HBox>
-                                    <Pane prefHeight="30.0">
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%enter_star_numbers">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="100.0" top="15.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                    </Pane>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-                                       <children>
-                                          <Label text="%star_numbers" />
-                                          <TextField fx:id="fieldStarNumber0" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="25.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="fieldStarNumber1" prefWidth="30.0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                    </HBox>
-                                    <Pane prefHeight="30.0">
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%choose_super_stars">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="100.0" top="20.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                    </Pane>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-                                       <children>
-                                          <Label text="%super_stars" />
-                                          <CheckBox fx:id="superStar1" mnemonicParsing="false" text="SuperStar1">
-                                             <HBox.margin>
-                                                <Insets left="50.0" />
-                                             </HBox.margin>
-                                          </CheckBox>
-                                          <CheckBox fx:id="superStar2" mnemonicParsing="false" text="SuperStar2">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </CheckBox>
-                                          <CheckBox fx:id="superStar3" mnemonicParsing="false" text="SuperStar3">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </CheckBox>
-                                          <CheckBox fx:id="superStar4" mnemonicParsing="false" text="SuperStar4">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </CheckBox>
-                                       </children>
-                                    </HBox>
-                                    <Pane prefHeight="30.0">
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%validity_duration">
-                                             <font>
-                                                <Font name="System Italic" size="12.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="100.0" top="15.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                    </Pane>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
-                                       <children>
-                                          <Label text="%validity_duration_txt" />
-                                          <ChoiceBox fx:id="listValidityDuration" prefWidth="40.0">
-                                             <HBox.margin>
-                                                <Insets left="40.0" />
-                                             </HBox.margin>
-                                 
-                                          </ChoiceBox>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
-                                       <children>
-                                          <Button fx:id="buttonBuyTicket" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actionBuyTicket" text="%buy_ticket_button">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="%draw_winners_tab">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT">
-                                       <children>
-                                          <Label prefWidth="130.0" text="%drawing_date_txt" />
-                                          <Label fx:id="labelCurrentDrawingDate" prefWidth="250.0" text="Fri, May 30th 2014">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Label fx:id="langEN2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#langSwitchEnglish" text="EN">
-                                             <HBox.margin>
-                                                <Insets left="100.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                          <Separator orientation="VERTICAL" prefHeight="10.0">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </Separator>
-                                          <Label fx:id="langDE2" onMouseClicked="#langSwitchGerman" text="DE">
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="25.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0">
-                                       <children>
-                                          <Label text="%winning_numbers" />
-                                          <Label fx:id="labelWinningNumbers" alignment="TOP_LEFT" text="0-0-0-0-0  |  0-0">
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0">
-                                       <children>
-                                          <Label text="%winning_super_star" />
-                                          <Label fx:id="labelWinningSuperStar" text="A000A">
-                                             <HBox.margin>
-                                                <Insets left="34.0" />
-                                             </HBox.margin>
-                                          </Label>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Pane>
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%winner_quota">
+                                          <Label alignment="BASELINE_LEFT" text="%last_drawing">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
-                                             <padding>
-                                                <Insets top="15.0" />
-                                             </padding>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Pane>
+												<HBox alignment="CENTER_LEFT">
+													<children>
+														<Label prefWidth="130.0" text="%drawing_date_txt" />
+														<Label fx:id="labelCurrentDrawingDate" prefWidth="250.0" text="Fri, May 30th 2014">
+															<HBox.margin>
+																<Insets />
+															</HBox.margin>
+														</Label>
+														<Label fx:id="langEN2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#langSwitchEnglish" text="EN">
+															<HBox.margin>
+																<Insets left="100.0" />
+															</HBox.margin>
+														</Label>
+														<Separator orientation="VERTICAL" prefHeight="10.0">
+															<HBox.margin>
+																<Insets left="5.0" />
+															</HBox.margin>
+														</Separator>
+														<Label fx:id="langDE2" onMouseClicked="#langSwitchGerman" text="DE">
+															<HBox.margin>
+																<Insets left="5.0" />
+															</HBox.margin>
+														</Label>
+													</children>
+													<VBox.margin>
+														<Insets />
+													</VBox.margin>
+												</HBox>
+												<HBox alignment="CENTER_LEFT" prefWidth="200.0">
+													<children>
+														<Label text="%winning_numbers" />
+														<Label fx:id="labelWinningNumbers" alignment="TOP_LEFT" text="0-0-0-0-0  |  0-0">
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</Label>
+													</children>
+													<VBox.margin>
+														<Insets top="2.0" />
+													</VBox.margin>
+												</HBox>
+												<HBox alignment="CENTER_LEFT" prefWidth="200.0">
+													<children>
+														<Label text="%winning_super_star" />
+														<Label fx:id="labelWinningSuperStar" text="A000A">
+															<HBox.margin>
+																<Insets left="34.0" />
+															</HBox.margin>
+														</Label>
+														<Button fx:id="buttonDrawNumbers" mnemonicParsing="false" onAction="#actionDrawNumbers" text="%draw_button">
+                                             <HBox.margin>
+                                                <Insets left="200.0" />
+                                             </HBox.margin></Button>
+													</children>
+													<VBox.margin>
+														<Insets top="2.0" />
+													</VBox.margin>
+												</HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Separator>
+												<Pane>
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%winner_quota">
+															<font>
+																<Font name="System Bold" size="12.0" />
+															</font>
+														</Label>
+													</children>
+												</Pane>
+                                    <HBox>
+                                       <children>
+														<Label alignment="BASELINE_LEFT" text="%amount_tickets" />
+                                          <Label fx:id="labelTotalNumberTickets" text="0">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+												<Pane layoutX="10.0" layoutY="101.0">
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%winners_numbers" />
+													</children>
+													<VBox.margin>
+														<Insets top="5.0" />
+													</VBox.margin>
+												</Pane>
+												<HBox alignment="CENTER_LEFT" prefWidth="200.0">
+													<children>
+														<VBox>
+															<children>
+																<Label text="#5+2">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#5+1">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#5+0">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+														</VBox>
+														<VBox>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+															<children>
+																<Label fx:id="labelNumberRank0" text="0" />
+																<Label fx:id="labelNumberRank1" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelNumberRank2" layoutX="10.0" layoutY="27.0" text="0" />
+															</children>
+														</VBox>
+														<VBox layoutX="10.0" layoutY="10.0">
+															<children>
+																<Label text="#4+2">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#4+1">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#4+0">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="42.0" layoutY="10.0">
+															<children>
+																<Label fx:id="labelNumberRank3" text="0" />
+																<Label fx:id="labelNumberRank4" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelNumberRank5" layoutX="10.0" layoutY="27.0" text="0" />
+															</children>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="81.0" layoutY="10.0">
+															<children>
+																<Label text="#3+2">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#2+2">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#3+1">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="44.0" text="#3+0">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="103.0" layoutY="10.0">
+															<children>
+																<Label fx:id="labelNumberRank6" text="0" />
+																<Label fx:id="labelNumberRank7" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelNumberRank8" layoutX="10.0" layoutY="27.0" text="0" />
+																<Label fx:id="labelNumberRank9" layoutX="10.0" layoutY="44.0" text="0" />
+															</children>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="181.0" layoutY="10.0">
+															<children>
+																<Label text="#1+2">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#2+1">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#2+0">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="142.0" layoutY="10.0">
+															<children>
+																<Label fx:id="labelNumberRank10" text="0" />
+																<Label fx:id="labelNumberRank11" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelNumberRank12" layoutX="10.0" layoutY="27.0" text="0" />
+															</children>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+														</VBox>
+													</children>
+													<VBox.margin>
+														<Insets top="5.0" />
+													</VBox.margin>
+												</HBox>
+												<Pane layoutX="10.0" layoutY="138.0">
+													<children>
+														<Label alignment="BASELINE_LEFT" text="%winners_super_stars">
+															<padding>
+																<Insets top="5.0" />
+															</padding>
+														</Label>
+													</children>
+												</Pane>
+												<HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefWidth="200.0">
+													<children>
+														<VBox>
+															<children>
+																<Label text="#9">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#8">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#7">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+														</VBox>
+														<VBox>
+															<children>
+																<Label fx:id="labelSuperStarRank9" text="0" />
+																<Label fx:id="labelSuperStarRank8" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelSuperStarRank7" layoutX="10.0" layoutY="27.0" text="0" />
+															</children>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="10.0" layoutY="10.0">
+															<children>
+																<Label text="#6">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#5">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#4">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="42.0" layoutY="10.0">
+															<children>
+																<Label fx:id="labelSuperStarRank6" text="0" />
+																<Label fx:id="labelSuperStarRank5" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelSuperStarRank4" layoutX="10.0" layoutY="27.0" text="0" />
+															</children>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="81.0" layoutY="10.0">
+															<children>
+																<Label text="#3">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="10.0" text="#2">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+																<Label layoutX="10.0" layoutY="27.0" text="#1">
+																	<font>
+																		<Font name="System Italic" size="12.0" />
+																	</font>
+																</Label>
+															</children>
+															<HBox.margin>
+																<Insets left="20.0" />
+															</HBox.margin>
+														</VBox>
+														<VBox layoutX="103.0" layoutY="10.0">
+															<children>
+																<Label fx:id="labelSuperStarRank3" text="0" />
+																<Label fx:id="labelSuperStarRank2" layoutX="10.0" layoutY="10.0" text="0" />
+																<Label fx:id="labelSuperStarRank1" layoutX="10.0" layoutY="27.0" text="0" />
+															</children>
+															<HBox.margin>
+																<Insets left="10.0" />
+															</HBox.margin>
+														</VBox>
+													</children>
+													<VBox.margin>
+														<Insets top="5.0" />
+													</VBox.margin>
+												</HBox>
+                                    <Separator prefWidth="200.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Separator>
+                                    <Pane layoutX="10.0" layoutY="108.0">
+                                       <children>
+                                          <Label alignment="BASELINE_LEFT" text="%buy_random_tickets">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
                                           </Label>
                                        </children>
                                     </Pane>
-                                    <Pane layoutX="10.0" layoutY="101.0">
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%winners_numbers" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </Pane>
-                                    <HBox alignment="CENTER_LEFT" prefWidth="200.0">
-                                       <children>
-                                          <VBox>
-                                             <children>
-                                                <Label text="5+2" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="5+1" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="5+0" />
-                                             </children>
-                                          </VBox>
-                                          <VBox>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                             <children>
-                                                <Label fx:id="labelNumberRank0" text="123456" />
-                                                <Label fx:id="labelNumberRank1" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelNumberRank2" layoutX="10.0" layoutY="27.0" text="123456" />
-                                             </children>
-                                          </VBox>
-                                          <VBox layoutX="10.0" layoutY="10.0">
-                                             <children>
-                                                <Label text="4+2" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="4+1" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="4+0" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="42.0" layoutY="10.0">
-                                             <children>
-                                                <Label fx:id="labelNumberRank3" text="123456" />
-                                                <Label fx:id="labelNumberRank4" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelNumberRank5" layoutX="10.0" layoutY="27.0" text="123456" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="81.0" layoutY="10.0">
-                                             <children>
-                                                <Label text="3+2" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="2+2" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="3+1" />
-                                                <Label layoutX="10.0" layoutY="44.0" text="3+0" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="103.0" layoutY="10.0">
-                                             <children>
-                                                <Label fx:id="labelNumberRank6" text="123456" />
-                                                <Label fx:id="labelNumberRank7" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelNumberRank8" layoutX="10.0" layoutY="27.0" text="123456" />
-                                                <Label fx:id="labelNumberRank9" layoutX="10.0" layoutY="44.0" text="123456" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="181.0" layoutY="10.0">
-                                             <children>
-                                                <Label text="1+2" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="2+1" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="2+0" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="142.0" layoutY="10.0">
-                                             <children>
-                                                <Label fx:id="labelNumberRank10" text="123456" />
-                                                <Label fx:id="labelNumberRank11" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelNumberRank12" layoutX="10.0" layoutY="27.0" text="123456" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <Pane layoutX="10.0" layoutY="138.0">
-                                       <children>
-                                          <Label alignment="BASELINE_LEFT" text="%winners_super_stars">
-                                             <padding>
-                                                <Insets top="5.0" />
-                                             </padding>
-                                          </Label>
-                                       </children>
-                                    </Pane>
-                                    <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="160.0" prefWidth="200.0">
-                                       <children>
-                                          <VBox>
-                                             <children>
-                                                <Label text="9" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="8" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="7" />
-                                             </children>
-                                          </VBox>
-                                          <VBox>
-                                             <children>
-                                                <Label fx:id="labelSuperStarRank9" text="123456" />
-                                                <Label fx:id="labelSuperStarRank8" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelSuperStarRank7" layoutX="10.0" layoutY="27.0" text="123456" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="10.0" layoutY="10.0">
-                                             <children>
-                                                <Label text="6" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="5" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="4" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="42.0" layoutY="10.0">
-                                             <children>
-                                                <Label fx:id="labelSuperStarRank6" text="123456" />
-                                                <Label fx:id="labelSuperStarRank5" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelSuperStarRank4" layoutX="10.0" layoutY="27.0" text="123456" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="81.0" layoutY="10.0">
-                                             <children>
-                                                <Label text="3" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="2" />
-                                                <Label layoutX="10.0" layoutY="27.0" text="1" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="20.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox layoutX="103.0" layoutY="10.0">
-                                             <children>
-                                                <Label fx:id="labelSuperStarRank3" text="123456" />
-                                                <Label fx:id="labelSuperStarRank2" layoutX="10.0" layoutY="10.0" text="123456" />
-                                                <Label fx:id="labelSuperStarRank1" layoutX="10.0" layoutY="27.0" text="123456" />
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets left="10.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="5.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                    <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
-                                       <children>
-                                          <Button fx:id="buttonSimulateBuys" mnemonicParsing="false" onAction="#actionSimulateBuys" text="%simulate_buys_button">
+												<HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
+													<children>
+                                          <Label text="%enter_amount_tickets">
                                              <HBox.margin>
                                                 <Insets right="20.0" />
                                              </HBox.margin>
-                                          </Button>
-                                          <Button fx:id="buttonDrawNumbers" mnemonicParsing="false" onAction="#actionDrawNumbers" text="%draw_button" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <Separator prefWidth="200.0" />
-            <Pane prefHeight="60.0">
-               <children>
-                  <Label fx:id="message" text="%welcome">
-                     <padding>
-                        <Insets left="20.0" top="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </Pane>
-         </children>
-      </VBox>
-   </children>
+                                          </Label>
+                                          <TextField fx:id="fieldAmountRandomTickets" prefWidth="80.0">
+                                             <HBox.margin>
+                                                <Insets right="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+														<Button fx:id="buttonSimulateBuys" mnemonicParsing="false" onAction="#actionSimulateBuys" text="%simulate_buys_button">
+															<HBox.margin>
+																<Insets right="20.0" />
+															</HBox.margin>
+														</Button>
+													</children>
+												</HBox>
+											</children>
+										</VBox>
+									</children>
+								</AnchorPane>
+							</content>
+						</Tab>
+					</tabs>
+				</TabPane>
+				<Separator prefWidth="200.0" />
+				<Pane prefHeight="60.0">
+					<children>
+						<Label fx:id="message" text="%welcome">
+							<padding>
+								<Insets left="20.0" top="10.0" />
+							</padding>
+						</Label>
+					</children>
+				</Pane>
+			</children>
+		</VBox>
+	</children>
 </FlowPane>

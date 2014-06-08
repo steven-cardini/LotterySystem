@@ -9,10 +9,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
-import jaxb_lotterytypes.LotteryTicket;
+import javax.xml.bind.JAXBException;
 
 public class LottoMachine {
 	
@@ -33,19 +32,18 @@ public class LottoMachine {
 	private static Date nextDrawingDate;
 	
 	
-	public static void draw (MarshalHandler handler) throws ClassNotFoundException, IOException {
+	public static void draw (MarshalHandler handler) throws ClassNotFoundException, IOException, JAXBException {
 		int[] winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		String winningSuperStar = generateSuperStar();
 		
 		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, nextDrawingDate);
 		
+		handler.archiveOldTickets();
 		currentDrawingResult = new DrawingResult(currentWinningSet, handler.getLotteryTickets());
 
 		nextDrawingDate = calculateSubsequentDrawingDate();
-		
-		handler.archiveOldTickets();
-		
+				
 		saveOutputFiles();
 
 	}
