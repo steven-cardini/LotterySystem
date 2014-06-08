@@ -30,6 +30,10 @@ public class Main extends Application {
 	
 	public void setLanguage (Language language) {
 		this.currentLanguage = language;
+		this.reload();
+	}
+	
+	void reload () {
 		this.stage.close();
 		this.start(new Stage());
 	}

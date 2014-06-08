@@ -1,6 +1,7 @@
 package gui;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -23,7 +24,11 @@ import lotterysystem.LanguageHandler.Language;
 import lotterysystem.NumberOutOfRangeException;
 
 public class Controller implements Initializable {
-
+	
+	private static final int SIMULATION_NUMBER = 1000;
+	
+	// Tab 1
+	
 	@FXML
 	private Label langEN;
 
@@ -62,13 +67,106 @@ public class Controller implements Initializable {
 
 	@FXML
 	private CheckBox superStar3;
+	
+	@FXML
+	private CheckBox superStar4;
 
 	@FXML
 	private ChoiceBox<String> listValidityDuration;
 
 	@FXML
 	private Button buttonBuyTicket;
+	
+	// Tab 2
+	
+	@FXML
+    private Label langEN2;
+	
+	@FXML
+    private Label langDE2;
+	
+	@FXML
+	private Label labelCurrentDrawingDate;
+	
+	@FXML
+    private Label labelWinningNumbers;
+	
+	@FXML
+    private Label labelWinningSuperStar;
+	
+	@FXML
+    private Label labelNumberRank0;
+	
+	@FXML
+    private Label labelNumberRank1;
+	
+	@FXML
+    private Label labelNumberRank2;
+	
+	@FXML
+    private Label labelNumberRank3;
+	
+	@FXML
+    private Label labelNumberRank4;
+	
+	@FXML
+    private Label labelNumberRank5;
+	
+	@FXML
+    private Label labelNumberRank6;
+	
+	@FXML
+    private Label labelNumberRank7;
+	
+	@FXML
+    private Label labelNumberRank8;
+	
+	@FXML
+    private Label labelNumberRank9;
+	
+	@FXML
+    private Label labelNumberRank10;
+	
+	@FXML
+    private Label labelNumberRank11;
+	
+	@FXML
+    private Label labelNumberRank12;
+	
+	@FXML
+    private Label labelSuperStarRank1;
+	
+	@FXML
+    private Label labelSuperStarRank2;
+	
+	@FXML
+    private Label labelSuperStarRank3;
+	
+	@FXML
+    private Label labelSuperStarRank4;
+	
+	@FXML
+    private Label labelSuperStarRank5;
+	
+	@FXML
+    private Label labelSuperStarRank6;
+	
+	@FXML
+    private Label labelSuperStarRank7;
+	
+	@FXML
+    private Label labelSuperStarRank8;
+	
+	@FXML
+    private Label labelSuperStarRank9;
+	
+    @FXML
+    private Button buttonSimulateBuys;
 
+    @FXML
+    private Button buttonDrawNumbers;
+    
+    
 	@FXML
 	private Label message;
 	
@@ -76,6 +174,73 @@ public class Controller implements Initializable {
 
 	private MarshalHandler marshalHandler;
 	private LanguageHandler languageHandler = new LanguageHandler (Main.getInstance().getLanguage());
+	
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			this.marshalHandler = new MarshalHandler();
+		} catch (Exception e) {
+			printError("xml_initial_error");
+		}
+
+		try {
+			LottoMachine.initialize();
+		} catch (Exception e) {
+			printError("lotto_machine_error");
+		}
+		
+		String nextDrawingDate = languageHandler.formatDate(LottoMachine.getNextDrawingDate());
+		labelNextDrawingDate.setText(nextDrawingDate);
+		superStar1.setText(LottoMachine.generateSuperStar());
+		superStar2.setText(LottoMachine.generateSuperStar());
+		superStar3.setText(LottoMachine.generateSuperStar());
+		superStar4.setText(LottoMachine.generateSuperStar());
+		listValidityDuration.setItems(validityList);
+		
+		if (LottoMachine.isFirstDrawing()) {
+			labelCurrentDrawingDate.setText(languageHandler.getMessage("no_drawing_yet"));
+			labelWinningNumbers.setText(languageHandler.getMessage("no_drawing_yet"));
+			labelWinningSuperStar.setText(languageHandler.getMessage("no_drawing_yet"));
+		} else {
+			labelCurrentDrawingDate.setText(languageHandler.formatDate(LottoMachine.getLastDrawingDate()));
+			int[] mainNumbers = LottoMachine.getWinningMainNumbers();
+			int[] starNumbers = LottoMachine.getWinningStarNumbers();
+			String winningNumbers = LottoMachine.formatNumbers(mainNumbers) + "  |  " + LottoMachine.formatNumbers(starNumbers);
+			String superStar = LottoMachine.getWinningSuperStar();
+			labelWinningNumbers.setText(winningNumbers);
+			
+			labelWinningSuperStar.setText(superStar);
+			
+			int[] numberWinners = LottoMachine.getResults().getWinnersPerNumberRank();
+			labelNumberRank0.setText(Integer.toString(numberWinners[0]));
+			labelNumberRank1.setText(Integer.toString(numberWinners[1]));
+			labelNumberRank2.setText(Integer.toString(numberWinners[2]));
+			labelNumberRank3.setText(Integer.toString(numberWinners[3]));
+			labelNumberRank4.setText(Integer.toString(numberWinners[4]));
+			labelNumberRank5.setText(Integer.toString(numberWinners[5]));
+			labelNumberRank6.setText(Integer.toString(numberWinners[6]));
+			labelNumberRank7.setText(Integer.toString(numberWinners[7]));
+			labelNumberRank8.setText(Integer.toString(numberWinners[8]));
+			labelNumberRank9.setText(Integer.toString(numberWinners[9]));
+			labelNumberRank10.setText(Integer.toString(numberWinners[10]));
+			labelNumberRank11.setText(Integer.toString(numberWinners[11]));
+			labelNumberRank12.setText(Integer.toString(numberWinners[12]));
+			
+			int[] superStarWinners = LottoMachine.getResults().getWinnersPerSuperStarRank();
+			labelSuperStarRank9.setText(Integer.toString(superStarWinners[0]));
+			labelSuperStarRank8.setText(Integer.toString(superStarWinners[1]));
+			labelSuperStarRank7.setText(Integer.toString(superStarWinners[2]));
+			labelSuperStarRank6.setText(Integer.toString(superStarWinners[3]));
+			labelSuperStarRank5.setText(Integer.toString(superStarWinners[4]));
+			labelSuperStarRank4.setText(Integer.toString(superStarWinners[5]));
+			labelSuperStarRank3.setText(Integer.toString(superStarWinners[6]));
+			labelSuperStarRank2.setText(Integer.toString(superStarWinners[7]));
+			labelSuperStarRank1.setText(Integer.toString(superStarWinners[8]));
+}
+		
+		
+	}
 	
 
 	@FXML
@@ -88,7 +253,6 @@ public class Controller implements Initializable {
 		languageHandler.setLanguage(Language.GERMAN);
 	}
 	
-	//TODO: support multiple super stars!
 	@FXML
 	void actionBuyTicket(ActionEvent event) {
 		int validityDuration;
@@ -125,28 +289,55 @@ public class Controller implements Initializable {
 		
 		printSuccess("successful_buy");
 	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			this.marshalHandler = new MarshalHandler();
+	
+    @FXML
+    void actionSimulateBuys(ActionEvent event) {
+    	
+    	printSuccess("creating_random");
+    	
+    	Random rand = new Random();
+    	
+    	int[] validityDurations = new int [validityList.size()];
+    	for (int i=0; i<validityList.size(); i++)
+    		validityDurations[i] = Integer.parseInt(validityList.get(i));
+    	
+    	int validityDuration=0;
+    	int[] mainNumbers = null;
+    	int[] starNumbers = null;
+    	int amountSuperStars=0;
+    	String[] superStars = null;
+    	
+    	for (int i=0; i<SIMULATION_NUMBER; i++) {
+    		validityDuration = validityDurations[rand.nextInt(validityDurations.length)];
+    		mainNumbers = LottoMachine.getRandomNumbers(LottoMachine.getAmountMainNumbers(), LottoMachine.getMinMainNumber(), LottoMachine.getMaxMainNumber());
+    		starNumbers = LottoMachine.getRandomNumbers(LottoMachine.getAmountStarNumber(), LottoMachine.getMinStarNumber(), LottoMachine.getMaxStarNumber());
+    		amountSuperStars = rand.nextInt(4)+1;
+    		superStars = new String[amountSuperStars];
+    		for (int j=0; j<amountSuperStars; j++)
+    			superStars[j] = LottoMachine.generateSuperStar();
+    		
+    		try {
+    			marshalHandler.addTicket(validityDuration, mainNumbers, starNumbers, superStars);
+    		} catch (Exception e) {
+    			printError("xml_save_error");
+    			return;
+    		}
+    	}
+    	
+		printSuccess("successful_random");
+    	
+    }
+    
+    //TODO: implement
+    @FXML
+    void actionDrawNumbers(ActionEvent event) {
+    	try {
+			LottoMachine.draw(marshalHandler.getLotteryTickets());
+			Main.getInstance().reload();
 		} catch (Exception e) {
-			printError("xml_initial_error");
+			printError("unknown_error");		
 		}
-
-		try {
-			LottoMachine.initialize();
-		} catch (Exception e) {
-			printError("lotto_machine_error");
-		}
-		
-		String nextDrawingDate = languageHandler.formatDate(LottoMachine.getNextDrawingDate());
-		labelNextDrawingDate.setText(nextDrawingDate);
-		superStar1.setText(LottoMachine.generateSuperStar());
-		superStar2.setText(LottoMachine.generateSuperStar());
-		superStar3.setText(LottoMachine.generateSuperStar());
-		listValidityDuration.setItems(validityList);
-	}
+    }
 
 	private void printError(String errorMessageKey) {
 		Paint paint = Color.rgb(255, 10, 10);
@@ -200,6 +391,10 @@ public class Controller implements Initializable {
 		}
 		if (superStar3.isSelected()) {
 			superStars[counter] = superStar3.getText();
+			counter++;
+		}
+		if (superStar4.isSelected()) {
+			superStars[counter] = superStar4.getText();
 			counter++;
 		}
 		

@@ -1,11 +1,15 @@
 package lotterysystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import jaxb_lotterytypes.LotteryTicket;
 
-public class DrawingResult {
+public class DrawingResult implements Serializable {
+
+	private static final long serialVersionUID = 307626786167823002L;
+	
 	private int[] winningMainNumbers;
 	private int[] winningStarNumbers;
 	private String winningSuperStar;
@@ -76,8 +80,10 @@ public class DrawingResult {
 		for (int i=0; i<this.ticketAnalyzers.size(); i++) {
 			if (this.ticketAnalyzers.get(i).hasSuperStars()) {
 				int[] currentRanks = this.ticketAnalyzers.get(i).getSuperStarRanks();
-				for (int j=0; j<currentRanks.length; j++)
-					result[j] += currentRanks[j];
+				for (int j=0; j<currentRanks.length; j++) {
+					if (currentRanks[j]>0)
+						result[currentRanks[j]-1]++;
+				}
 			}
 		}
 		

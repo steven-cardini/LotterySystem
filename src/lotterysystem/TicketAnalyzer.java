@@ -1,6 +1,11 @@
 package lotterysystem;
 
-public class TicketAnalyzer {
+import java.io.Serializable;
+
+public class TicketAnalyzer implements Serializable {
+
+	private static final long serialVersionUID = -7039914036193372702L;
+	
 	private int[] chosenMainNumbers;
 	private int[] chosenStarNumbers;
 	private String[] chosenSuperStars;

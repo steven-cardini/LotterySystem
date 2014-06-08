@@ -25,9 +25,11 @@ public class LottoMachine {
 	private final static int MAX_STAR_NUMBER = 11;
 
 	private static File historyWinnersFile = new File ("winningNumbers.bin");
+	private static File historyStatisticsFile = new File ("winnerStatistics.bin");
 	private static WinningNumbersSet currentWinningSet;
 	private static ArrayList<WinningNumbersSet> pastWinningSets;
 	private static DrawingResult currentDrawingResult;
+	private static ArrayList<DrawingResult> pastDrawingResults;
 	private static Date nextDrawingDate;
 	
 	
@@ -36,16 +38,33 @@ public class LottoMachine {
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		String winningSuperStar = generateSuperStar();
 		
+		System.out.println("1 ok");
+		
 		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, nextDrawingDate);
+		
+		System.out.println("2 ok");
+		
 		currentDrawingResult = new DrawingResult(currentWinningSet, tickets);
-		nextDrawingDate = calculateSubsequentDrawingDate();
+		
+		System.out.println("3 ok");
 
-		saveWinningNumbers();
+		nextDrawingDate = calculateSubsequentDrawingDate();
+		
+		System.out.println("4 ok");
+
+		saveOutputFiles();
+		
+		System.out.println("5 ok");
+
 	}
 
 	public static String formatNumbers(int[] numberArray) {
 		String formatted="";
-		for (int i=0; i<numberArray.length; i++) formatted += numberArray[i] + " ";
+		for (int i=0; i<numberArray.length; i++)  {
+			formatted += numberArray[i];
+			if (i<numberArray.length-1)
+				formatted += "-";
+		}
 		return formatted;
 	}
 	
@@ -106,11 +125,16 @@ public class LottoMachine {
 	}
 		
 	public static void initialize() throws ClassNotFoundException, IOException {
+		if (!historyStatisticsFile.exists()) {
+			historyStatisticsFile.createNewFile();
+			pastDrawingResults = new ArrayList<>();
+		}
+		
 		if (!historyWinnersFile.exists() || historyWinnersFile.length()<=1) {
 			historyWinnersFile.createNewFile();
 			pastWinningSets = new ArrayList<>();
 		} else {
-			loadWinningNumbers();
+			loadOutputFiles();
 		}
 		nextDrawingDate = calculateSubsequentDrawingDate();
 	}
@@ -158,6 +182,10 @@ public class LottoMachine {
 		return sortedNumbers;
 	}
 	
+	public static int[] getRandomNumbers (int amount, int minValue, int maxValue) {
+		return drawWinningNumbers(amount, minValue, maxValue);
+	}
+	
 	//Method yields the first drawing date after the latest drawing date
 	private static Date calculateSubsequentDrawingDate () {
 		Calendar cal = Calendar.getInstance();
@@ -171,19 +199,31 @@ public class LottoMachine {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static void loadWinningNumbers() throws IOException, ClassNotFoundException {
+	private static void loadOutputFiles() throws IOException, ClassNotFoundException {
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream(historyWinnersFile));
 		pastWinningSets = (ArrayList<WinningNumbersSet>) in.readObject();
 		in.close();
 		currentWinningSet = pastWinningSets.get(pastWinningSets.size()-1);
+		
+		in = new ObjectInputStream(new FileInputStream(historyStatisticsFile));
+		pastDrawingResults = (ArrayList<DrawingResult>) in.readObject();
+		in.close();
+		currentDrawingResult = pastDrawingResults.get(pastWinningSets.size()-1);
 	}
 
-	private static void saveWinningNumbers() throws IOException, ClassNotFoundException {
+	private static void saveOutputFiles() throws IOException, ClassNotFoundException {
 		if (currentWinningSet != null) 
 			pastWinningSets.add(currentWinningSet);
 		
 		ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream(historyWinnersFile));
 		out.writeObject(pastWinningSets);
+		out.close();
+		
+		if (currentDrawingResult != null)
+			pastDrawingResults.add(currentDrawingResult);
+		
+		out = new ObjectOutputStream (new FileOutputStream(historyStatisticsFile));
+		out.writeObject(pastDrawingResults);
 		out.close();
 	}
 	
