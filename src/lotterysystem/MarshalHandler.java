@@ -23,8 +23,8 @@ public class MarshalHandler {
 
 	private LotteryTickets lotteryTicketsRoot;
 	private LotteryTickets archiveTicketsRoot;
-	private File outputFile = new File ("tickets.xml");
-	private File archiveFile = new File ("tickets_archive.xml");
+	private File outputFile = new File("tickets.xml");
+	private File archiveFile = new File("tickets_archive.xml");
 	private Marshaller marshaller;
 	private Unmarshaller unmarshaller;
 	private ObjectFactory objFact;
@@ -36,18 +36,18 @@ public class MarshalHandler {
 		this.unmarshaller = jc.createUnmarshaller();
 		this.marshaller = jc.createMarshaller();
 		this.marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		
+
 		this.objFact = new ObjectFactory();
 
 		if (!outputFile.exists())
 			outputFile.createNewFile();
-		
+
 		if (!archiveFile.exists())
 			archiveFile.createNewFile();
 
 		this.loadLotteryTickets();
 		this.loadArchiveTickets();
-		
+
 		// set counter of ticket id
 		this.loadLastTicketId();
 
@@ -61,11 +61,12 @@ public class MarshalHandler {
 		this.outputFile = f;
 	}
 
-	public void addTicket(int validityDuration, int[] mainNumbers, int[] starNumbers, String[] superStars) throws DatatypeConfigurationException, JAXBException {
+	public void addMultipleTickets(int validityDuration, int[] mainNumbers,	int[] starNumbers, String[] superStars)
+			throws DatatypeConfigurationException {
 		// Sort numbers
 		mainNumbers = LottoMachine.sortNumbers(mainNumbers);
 		starNumbers = LottoMachine.sortNumbers(starNumbers);
-		
+
 		// Create JAXB objects
 		MainNumbers mainNrObj = objFact.createPlayMainNumbers();
 		List<Integer> mainNrList = mainNrObj.getMainNumber();
@@ -82,15 +83,16 @@ public class MarshalHandler {
 		Plays playsObj = objFact.createLotteryTicketPlays();
 		List<Play> playsList = playsObj.getPlay();
 		playsList.add(playObj);
-		
-		SuperStarNumbers superStarObj = objFact.createLotteryTicketSuperStarNumbers();
+
+		SuperStarNumbers superStarObj = objFact
+				.createLotteryTicketSuperStarNumbers();
 
 		List<String> superStarsList = superStarObj.getSuperStarNumber();
-		for (int i=0; i<superStars.length; i++) {
-			if (superStars[i]!=null)
+		for (int i = 0; i < superStars.length; i++) {
+			if (superStars[i] != null)
 				superStarsList.add(superStars[i]);
 		}
-		
+
 		GregorianCalendar gcal = new GregorianCalendar();
 		gcal.setTime(LottoMachine.getNextDrawingDate());
 		XMLGregorianCalendar xmlCal = null;
@@ -102,92 +104,100 @@ public class MarshalHandler {
 		ticket.setSuperStarNumbers(superStarObj);
 		ticket.setValidityDuration(validityDuration);
 		ticket.setTicketId(getNextTicketId());
-		
-		// Save objects to XML file
+
+		// Save objects to root object
 		this.lotteryTicketsRoot.getLotteryTicket().add(ticket);
+	}
+
+	public void addTicket(int validityDuration, int[] mainNumbers, int[] starNumbers, String[] superStars) throws DatatypeConfigurationException, JAXBException {
+		this.addMultipleTickets(validityDuration, mainNumbers, starNumbers, superStars);
 		this.saveLotteryTickets();
 	}
-	
-	
+
 	// Returns all tickets that are valid for the next drawing
-	public List<LotteryTicket> getLotteryTickets () {
+	public List<LotteryTicket> getLotteryTickets() {
 		return this.lotteryTicketsRoot.getLotteryTicket();
 	}
 
-	
 	private void loadLotteryTickets() throws JAXBException {
 		if (outputFile.length() < 1)
 			this.lotteryTicketsRoot = objFact.createLotteryTickets();
 		else
 			// Unmarshal the file
-			this.lotteryTicketsRoot = (LotteryTickets) unmarshaller.unmarshal(this.outputFile);
+			this.lotteryTicketsRoot = (LotteryTickets) unmarshaller
+					.unmarshal(this.outputFile);
 	}
-	
+
 	private void loadArchiveTickets() throws JAXBException {
 		if (archiveFile.length() < 1)
 			this.archiveTicketsRoot = objFact.createLotteryTickets();
 		else
 			// Unmarshal the file
-			this.archiveTicketsRoot = (LotteryTickets) unmarshaller.unmarshal(this.archiveFile);
+			this.archiveTicketsRoot = (LotteryTickets) unmarshaller
+					.unmarshal(this.archiveFile);
 	}
 
-	private void saveLotteryTickets() throws JAXBException {
-		this.archiveOldTickets();
+	public void saveLotteryTickets() throws JAXBException {
 		// Marshal the file
 		this.marshaller.marshal(this.lotteryTicketsRoot, this.outputFile);
 		this.marshaller.marshal(this.archiveTicketsRoot, this.archiveFile);
 	}
 
-	
 	// Removes old tickets and adds them to the archive XML-file
-	private void archiveOldTickets() {
+	public void archiveOldTickets() {
 		if (this.lotteryTicketsRoot == null || LottoMachine.isFirstDrawing())
 			return;
 
-		List<LotteryTicket> currentTickets = lotteryTicketsRoot.getLotteryTicket();
+		List<LotteryTicket> currentTickets = lotteryTicketsRoot
+				.getLotteryTicket();
 		this.lotteryTicketsRoot = objFact.createLotteryTickets();
 
 		for (int i = 0; i < currentTickets.size(); i++) {
 			int validityDuration = currentTickets.get(i).getValidityDuration();
-			XMLGregorianCalendar firstDrawingDateXML = currentTickets.get(i).getFirstDrawingDate();
-			Date firstDrawingDate = firstDrawingDateXML.toGregorianCalendar().getTime();
-			Date lastDrawingDate = LottoMachine.getFutureDrawingDate(firstDrawingDate, validityDuration);
+			XMLGregorianCalendar firstDrawingDateXML = currentTickets.get(i)
+					.getFirstDrawingDate();
+			Date firstDrawingDate = firstDrawingDateXML.toGregorianCalendar()
+					.getTime();
+			Date lastDrawingDate = LottoMachine.getFutureDrawingDate(
+					firstDrawingDate, validityDuration);
 
 			if (lastDrawingDate.before(LottoMachine.getNextDrawingDate()))
-				this.archiveTicketsRoot.getLotteryTicket().add(currentTickets.get(i));
+				this.archiveTicketsRoot.getLotteryTicket().add(
+						currentTickets.get(i));
 			else
-				this.lotteryTicketsRoot.getLotteryTicket().add(currentTickets.get(i));
+				this.lotteryTicketsRoot.getLotteryTicket().add(
+						currentTickets.get(i));
 		}
-				
+
 	}
-	
-	private static ArrayList<Integer> toList (int[] array) {
+
+	private static ArrayList<Integer> toList(int[] array) {
 		ArrayList<Integer> list = new ArrayList<>();
-		for (int i=0; i<array.length; i++)
+		for (int i = 0; i < array.length; i++)
 			list.add(new Integer(array[i]));
 		return list;
 	}
-	
-	private int getNextTicketId () {
+
+	private int getNextTicketId() {
 		this.lastTicketId++;
 		return this.lastTicketId;
 	}
-	
+
 	private void loadLastTicketId() {
 		ArrayList<Integer> ticketNumbers = new ArrayList<>();
-		
+
 		for (LotteryTicket ticket : lotteryTicketsRoot.getLotteryTicket())
 			ticketNumbers.add(ticket.getTicketId());
-		
+
 		for (LotteryTicket ticket : archiveTicketsRoot.getLotteryTicket())
 			ticketNumbers.add(ticket.getTicketId());
-		
+
 		Collections.sort(ticketNumbers);
-		
-		if (ticketNumbers.size()==0)
+
+		if (ticketNumbers.size() == 0)
 			this.lastTicketId = 3000000;
 		else
-			this.lastTicketId = ticketNumbers.get(ticketNumbers.size()-1);
+			this.lastTicketId = ticketNumbers.get(ticketNumbers.size() - 1);
 	}
 
 }

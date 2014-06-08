@@ -33,28 +33,20 @@ public class LottoMachine {
 	private static Date nextDrawingDate;
 	
 	
-	public static void draw (List<LotteryTicket> tickets) throws ClassNotFoundException, IOException {
+	public static void draw (MarshalHandler handler) throws ClassNotFoundException, IOException {
 		int[] winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		String winningSuperStar = generateSuperStar();
 		
-		System.out.println("1 ok");
-		
 		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, nextDrawingDate);
 		
-		System.out.println("2 ok");
-		
-		currentDrawingResult = new DrawingResult(currentWinningSet, tickets);
-		
-		System.out.println("3 ok");
+		currentDrawingResult = new DrawingResult(currentWinningSet, handler.getLotteryTickets());
 
 		nextDrawingDate = calculateSubsequentDrawingDate();
 		
-		System.out.println("4 ok");
-
-		saveOutputFiles();
+		handler.archiveOldTickets();
 		
-		System.out.println("5 ok");
+		saveOutputFiles();
 
 	}
 

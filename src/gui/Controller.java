@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javax.xml.bind.JAXBException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +27,7 @@ import lotterysystem.NumberOutOfRangeException;
 
 public class Controller implements Initializable {
 	
-	private static final int SIMULATION_NUMBER = 1000;
+	private static final int SIMULATION_NUMBER = 100000;
 	
 	// Tab 1
 	
@@ -317,13 +319,20 @@ public class Controller implements Initializable {
     			superStars[j] = LottoMachine.generateSuperStar();
     		
     		try {
-    			marshalHandler.addTicket(validityDuration, mainNumbers, starNumbers, superStars);
+    			marshalHandler.addMultipleTickets(validityDuration, mainNumbers, starNumbers, superStars);
     		} catch (Exception e) {
     			printError("xml_save_error");
     			return;
     		}
     	}
     	
+    	
+    	try {
+			marshalHandler.saveLotteryTickets();
+		} catch (JAXBException e) {
+			printError("xml_save_error");
+			return;
+		}
 		printSuccess("successful_random");
     	
     }
@@ -332,7 +341,7 @@ public class Controller implements Initializable {
     @FXML
     void actionDrawNumbers(ActionEvent event) {
     	try {
-			LottoMachine.draw(marshalHandler.getLotteryTickets());
+			LottoMachine.draw(marshalHandler);
 			Main.getInstance().reload();
 		} catch (Exception e) {
 			printError("unknown_error");		
