@@ -9,7 +9,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+
+import jaxb_lotterytypes.LotteryTicket;
 
 public class LottoMachine {
 	
@@ -24,15 +27,17 @@ public class LottoMachine {
 	private static File historyWinnersFile = new File ("winningNumbers.bin");
 	private static WinningNumbersSet currentWinningSet;
 	private static ArrayList<WinningNumbersSet> pastWinningSets;
+	private static DrawingResult currentDrawingResult;
 	private static Date nextDrawingDate;
 	
 	
-	public static void draw () throws ClassNotFoundException, IOException {
+	public static void draw (List<LotteryTicket> tickets) throws ClassNotFoundException, IOException {
 		int[] winningMainNumbers = drawWinningNumbers (AMOUNT_MAIN_NUMBERS, MIN_MAIN_NUMBER, MAX_MAIN_NUMBER);
 		int[] winningStarNumbers = drawWinningNumbers (AMOUNT_STAR_NUMBERS, MIN_STAR_NUMBER, MAX_STAR_NUMBER);
 		String winningSuperStar = generateSuperStar();
 		
 		currentWinningSet = new WinningNumbersSet(winningMainNumbers, winningStarNumbers, winningSuperStar, nextDrawingDate);
+		currentDrawingResult = new DrawingResult(currentWinningSet, tickets);
 		nextDrawingDate = calculateSubsequentDrawingDate();
 
 		saveWinningNumbers();
@@ -45,7 +50,7 @@ public class LottoMachine {
 	}
 	
 	
-	// WARNING: the following 4 methods may throw a null pointer exception if no draw has been made until now
+	// WARNING: the following methods may throw a null pointer exception if no draw has been made until now
 	// ----->
 	public static int[] getWinningMainNumbers () {
 		return currentWinningSet.getWinningMainNumbers();
@@ -61,6 +66,10 @@ public class LottoMachine {
 	
 	public static Date getLastDrawingDate () {
 		return currentWinningSet.getDrawingDate();
+	}
+	
+	public static DrawingResult getResults () {
+		return currentDrawingResult;
 	}
 	// <-----
 	

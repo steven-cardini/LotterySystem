@@ -107,7 +107,14 @@ public class MarshalHandler {
 		this.lotteryTicketsRoot.getLotteryTicket().add(ticket);
 		this.saveLotteryTickets();
 	}
+	
+	
+	// Returns all tickets that are valid for the next drawing
+	public List<LotteryTicket> getLotteryTickets () {
+		return this.lotteryTicketsRoot.getLotteryTicket();
+	}
 
+	
 	private void loadLotteryTickets() throws JAXBException {
 		if (outputFile.length() < 1)
 			this.lotteryTicketsRoot = objFact.createLotteryTickets();
